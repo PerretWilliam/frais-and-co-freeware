@@ -44,7 +44,7 @@
               <div class="h-2 bg-muted rounded-full overflow-hidden">
                 <div
                   id="progress-en-attente"
-                  class="h-full bg-[var(--chart-pending)] rounded-full transition-all"
+                  class="h-full bg-chart-pending rounded-full transition-all"
                 ></div>
               </div>
               <p class="text-xs text-muted-foreground">Frais à valider</p>
@@ -77,7 +77,7 @@
               <div class="h-2 bg-muted rounded-full overflow-hidden">
                 <div
                   id="progress-valides"
-                  class="h-full bg-[var(--chart-validated)] rounded-full transition-all"
+                  class="h-full bg-chart-validated rounded-full transition-all"
                 ></div>
               </div>
               <p class="text-xs text-muted-foreground">
@@ -95,7 +95,7 @@
                 ></i>
               </div>
               <p
-                class="text-2xl font-bold text-[var(--chart-refused)]"
+                class="text-2xl font-bold text-chart-refused"
                 id="stat-refuses"
               >
                 0
@@ -166,11 +166,11 @@
                 class="flex items-center gap-3 p-3 rounded-lg border hover:bg-accent transition-colors"
               >
                 <div
-                  class="w-10 h-10 rounded-full bg-[var(--chart-pending)]/20 flex items-center justify-center"
+                  class="w-10 h-10 rounded-full bg-(--chart-pending)/20 flex items-center justify-center"
                 >
                   <i
                     data-lucide="list-checks"
-                    class="w-5 h-5 text-[var(--chart-pending)]"
+                    class="w-5 h-5 text-chart-pending"
                   ></i>
                 </div>
                 <div class="text-left">

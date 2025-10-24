@@ -1,4 +1,5 @@
 import { Utilisateur, Role } from "../types/api.types";
+import { renderTemplate } from "./template-helper";
 
 declare const lucide: {
   createIcons: () => void;
@@ -153,45 +154,46 @@ export class Sidebar {
         setTimeout(() => existingOverlay.remove(), 300);
       }
     } else {
-      this.render();
+      void this.render();
     }
   }
 
-  private render(): void {
+  private async render(): Promise<void> {
     const menuItems = this.getFilteredMenuItems();
 
-    this.container.innerHTML = `
-      <!-- Sidebar -->
-      <aside 
-        class="fixed top-0 left-0 h-screen w-64 bg-sidebar border-r flex flex-col z-50 transition-all duration-300 ease-in-out lg:relative lg:z-auto ${
-          this.isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        }"
-      >
-        <nav class="flex-1 overflow-y-auto p-4 space-y-1">
-          ${menuItems
-            .map(
-              (item) => `
-            <button
-              data-page="${item.id}"
-              class="sidebar-link w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-                this.currentPage === item.id
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                  : "text-sidebar-foreground hover:bg-sidebar-accent/50"
-              }"
-            >
-              <i data-lucide="${item.icon}" class="h-5 w-5"></i>
-              <span>${this.getMenuLabel(item)}</span>
-            </button>
-          `
-            )
-            .join("")}
-        </nav>
+    // Generate menu items HTML
+    const menuItemsHtml = await Promise.all(
+      menuItems.map(async (item) => {
+        const activeClass =
+          this.currentPage === item.id
+            ? "bg-sidebar-accent text-sidebar-accent-foreground"
+            : "text-sidebar-foreground hover:bg-sidebar-accent/50";
 
-        <div class="p-4 border-t text-xs text-muted-foreground">
-          v1.0 – Freeware
-        </div>
-      </aside>
-    `;
+        return await renderTemplate(
+          "/src/frontend/templates/sidebar-menu-item.tpl.html",
+          {
+            id: item.id,
+            icon: item.icon,
+            label: this.getMenuLabel(item),
+            activeClass,
+          }
+        );
+      })
+    );
+
+    const openClass = this.isOpen
+      ? "translate-x-0"
+      : "-translate-x-full lg:translate-x-0";
+
+    const sidebarHtml = await renderTemplate(
+      "/src/frontend/templates/sidebar.tpl.html",
+      {
+        openClass,
+        menuItemsHtml: menuItemsHtml.join("\n"),
+      }
+    );
+
+    this.container.innerHTML = sidebarHtml;
 
     // Add event listeners
     const links = this.container.querySelectorAll(".sidebar-link");

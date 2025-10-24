@@ -1,0 +1,32 @@
+<div
+  class="absolute right-0 mt-2 w-56 bg-popover border rounded-md shadow-lg z-50"
+>
+  <div class="p-2 border-b">
+    <p class="text-sm font-medium">Mon compte</p>
+  </div>
+  <div class="py-1">
+    <button
+      data-navigate="profil"
+      class="dropdown-item w-full text-left px-4 py-2 text-sm hover:bg-accent transition-colors flex items-center gap-2"
+    >
+      <i data-lucide="user" class="h-4 w-4"></i>
+      Profil
+    </button>
+    <button
+      data-navigate="parametres"
+      class="dropdown-item w-full text-left px-4 py-2 text-sm hover:bg-accent transition-colors flex items-center gap-2"
+    >
+      <i data-lucide="settings" class="h-4 w-4"></i>
+      Paramètres
+    </button>
+  </div>
+  <div class="border-t py-1">
+    <button
+      id="logout-button"
+      class="w-full text-left px-4 py-2 text-sm text-destructive hover:bg-accent transition-colors flex items-center gap-2"
+    >
+      <i data-lucide="log-out" class="h-4 w-4"></i>
+      Déconnexion
+    </button>
+  </div>
+</div>

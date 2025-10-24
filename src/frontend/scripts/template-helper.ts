@@ -28,6 +28,7 @@ export async function loadTemplate(templatePath: string): Promise<string> {
 
 /**
  * Remplace les variables dans un template de manière sécurisée
+ * Les variables se terminant par 'Html' ne sont pas échappées (pour le HTML déjà rendu)
  */
 function replaceVariables(
   template: string,
@@ -39,7 +40,12 @@ function replaceVariables(
   Object.keys(data).forEach((key) => {
     const value = data[key];
     const regex = new RegExp(`{{\\s*${key}\\s*}}`, "g");
-    result = result.replace(regex, escapeHtml(String(value)));
+    // Ne pas échapper les variables se terminant par 'Html' (HTML déjà sécurisé)
+    const shouldEscape = !key.endsWith("Html");
+    result = result.replace(
+      regex,
+      shouldEscape ? escapeHtml(String(value)) : String(value)
+    );
   });
 
   // Nettoyer les variables non remplacées

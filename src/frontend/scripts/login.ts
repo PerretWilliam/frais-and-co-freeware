@@ -1,5 +1,6 @@
 import { UtilisateurService } from "../services/utilisateur.service";
 import { AuthManager } from "./auth";
+import { renderTemplate } from "./template-helper";
 
 // Déclaration pour Lucide (CDN)
 declare const lucide: {
@@ -74,10 +75,13 @@ loginForm.addEventListener("submit", async (e: Event) => {
 
   // Désactiver le bouton submit
   submitBtn.disabled = true;
-  submitBtn.innerHTML = `
-    <i data-lucide="loader-2" class="h-4 w-4 animate-spin mr-2"></i>
-    Connexion en cours...
-  `;
+  const originalText = submitBtn.textContent || "Se connecter";
+
+  const loadingHtml = await renderTemplate(
+    "/src/frontend/templates/loading-button.tpl.html",
+    { text: "Connexion en cours..." }
+  );
+  submitBtn.innerHTML = loadingHtml;
   lucide.createIcons();
 
   try {
@@ -107,7 +111,7 @@ loginForm.addEventListener("submit", async (e: Event) => {
   } finally {
     // Réactiver le bouton
     submitBtn.disabled = false;
-    submitBtn.innerHTML = "Se connecter";
+    submitBtn.textContent = originalText;
   }
 });
 

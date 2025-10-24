@@ -25,6 +25,12 @@ interface Frais {
 function navigate(page: string): void {
   console.log("Navigating to:", page);
   switch (page) {
+    case "profil":
+      window.location.href = "/src/frontend/pages/profil.html";
+      break;
+    case "parametres":
+      window.location.href = "/src/frontend/pages/parametres.html";
+      break;
     case "nouveau-frais":
       window.location.href = "/src/frontend/pages/nouveau-frais.html";
       break;

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paramètres - GestionFrais Pro</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+  </head>
+  <body class="bg-background text-foreground">
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar -->
+      <div id="sidebar-container"></div>
+
+      <!-- Main content -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Header -->
+        <div id="header-container"></div>
+
+        <!-- Page content -->
+        <main class="flex-1 overflow-y-auto p-6">
+          <div class="max-w-4xl mx-auto space-y-6">
+            <!-- Title -->
+            <div>
+              <h1 class="text-3xl font-bold tracking-tight">Paramètres</h1>
+              <p class="text-muted-foreground mt-2">
+                Gérez vos préférences et paramètres de compte
+              </p>
+            </div>
+
+            <!-- Account Info Card -->
+            <div class="bg-card border rounded-lg shadow-sm">
+              <div class="p-6 border-b">
+                <div class="flex items-center gap-2 mb-2">
+                  <i data-lucide="user" class="h-5 w-5"></i>
+                  <h2 class="text-xl font-semibold">Informations du compte</h2>
+                </div>
+                <p class="text-sm text-muted-foreground">
+                  Vos informations personnelles
+                </p>
+              </div>
+              <div class="p-6 space-y-4">
+                <div class="grid gap-4 md:grid-cols-2">
+                  <div class="space-y-2">
+                    <label class="text-sm font-medium">Email</label>
+                    <input
+                      type="email"
+                      id="account-email"
+                      class="w-full px-3 py-2 bg-background border rounded-md"
+                      disabled
+                    />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-sm font-medium">Rôle</label>
+                    <input
+                      type="text"
+                      id="account-role"
+                      class="w-full px-3 py-2 bg-background border rounded-md"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <button
+                  id="edit-profile-btn"
+                  class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                >
+                  Modifier mon profil
+                </button>
+              </div>
+            </div>
+
+            <!-- Appearance Card -->
+            <div class="bg-card border rounded-lg shadow-sm">
+              <div class="p-6 border-b">
+                <div class="flex items-center gap-2 mb-2">
+                  <i data-lucide="moon" class="h-5 w-5"></i>
+                  <h2 class="text-xl font-semibold">Apparence</h2>
+                </div>
+                <p class="text-sm text-muted-foreground">
+                  Personnalisez l'apparence de l'application
+                </p>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <label class="text-sm font-medium">Thème sombre</label>
+                    <p class="text-sm text-muted-foreground">
+                      Activer le mode sombre pour réduire la fatigue oculaire
+                    </p>
+                  </div>
+                  <button
+                    id="theme-toggle"
+                    class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 bg-input"
+                    role="switch"
+                    aria-checked="false"
+                  >
+                    <span
+                      class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-0"
+                      id="theme-toggle-thumb"
+                    ></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notifications Card -->
+            <div class="bg-card border rounded-lg shadow-sm">
+              <div class="p-6 border-b">
+                <div class="flex items-center gap-2 mb-2">
+                  <i data-lucide="bell" class="h-5 w-5"></i>
+                  <h2 class="text-xl font-semibold">Notifications</h2>
+                </div>
+                <p class="text-sm text-muted-foreground">
+                  Gérez vos préférences de notifications
+                </p>
+              </div>
+              <div class="p-6 space-y-4">
+                <div class="space-y-4">
+                  <!-- Email Notifications -->
+                  <div class="flex items-center justify-between">
+                    <div class="space-y-0.5">
+                      <label class="text-sm font-medium"
+                        >Notifications par email</label
+                      >
+                      <p class="text-sm text-muted-foreground">
+                        Recevoir des notifications par email
+                      </p>
+                    </div>
+                    <button
+                      class="notification-toggle relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-primary"
+                      role="switch"
+                      aria-checked="true"
+                      data-setting="email"
+                    >
+                      <span
+                        class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-5"
+                      ></span>
+                    </button>
+                  </div>
+
+                  <div class="border-t"></div>
+
+                  <!-- Frais Validés -->
+                  <div class="flex items-center justify-between">
+                    <div class="space-y-0.5">
+                      <label class="text-sm font-medium">Frais validés</label>
+                      <p class="text-sm text-muted-foreground">
+                        Être notifié quand un frais est validé
+                      </p>
+                    </div>
+                    <button
+                      class="notification-toggle relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-primary"
+                      role="switch"
+                      aria-checked="true"
+                      data-setting="fraisValides"
+                    >
+                      <span
+                        class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-5"
+                      ></span>
+                    </button>
+                  </div>
+
+                  <!-- Frais Refusés -->
+                  <div class="flex items-center justify-between">
+                    <div class="space-y-0.5">
+                      <label class="text-sm font-medium">Frais refusés</label>
+                      <p class="text-sm text-muted-foreground">
+                        Être notifié quand un frais est refusé
+                      </p>
+                    </div>
+                    <button
+                      class="notification-toggle relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-primary"
+                      role="switch"
+                      aria-checked="true"
+                      data-setting="fraisRefuses"
+                    >
+                      <span
+                        class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-5"
+                      ></span>
+                    </button>
+                  </div>
+
+                  <!-- Nouveaux Frais (only for comptable) -->
+                  <div
+                    id="nouveaux-frais-setting"
+                    class="items-center justify-between hidden"
+                  >
+                    <div class="space-y-0.5">
+                      <label class="text-sm font-medium">Nouveaux frais</label>
+                      <p class="text-sm text-muted-foreground">
+                        Être notifié des nouveaux frais à valider
+                      </p>
+                    </div>
+                    <button
+                      class="notification-toggle relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-input"
+                      role="switch"
+                      aria-checked="false"
+                      data-setting="nouveauxFrais"
+                    >
+                      <span
+                        class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-0"
+                      ></span>
+                    </button>
+                  </div>
+
+                  <!-- Rappels -->
+                  <div class="flex items-center justify-between">
+                    <div class="space-y-0.5">
+                      <label class="text-sm font-medium">Rappels</label>
+                      <p class="text-sm text-muted-foreground">
+                        Recevoir des rappels pour les actions en attente
+                      </p>
+                    </div>
+                    <button
+                      class="notification-toggle relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-primary"
+                      role="switch"
+                      aria-checked="true"
+                      data-setting="rappels"
+                    >
+                      <span
+                        class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-5"
+                      ></span>
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  id="save-notifications-btn"
+                  class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                >
+                  Enregistrer les préférences
+                </button>
+              </div>
+            </div>
+
+            <!-- Security Card -->
+            <div class="bg-card border rounded-lg shadow-sm">
+              <div class="p-6 border-b">
+                <div class="flex items-center gap-2 mb-2">
+                  <i data-lucide="lock" class="h-5 w-5"></i>
+                  <h2 class="text-xl font-semibold">Sécurité</h2>
+                </div>
+                <p class="text-sm text-muted-foreground">
+                  Gérez la sécurité de votre compte
+                </p>
+              </div>
+              <div class="p-6 space-y-4">
+                <div class="space-y-2">
+                  <label class="text-sm font-medium">Mot de passe</label>
+                  <p
+                    class="text-sm text-muted-foreground"
+                    id="password-last-changed"
+                  >
+                    Dernière modification : Il y a 3 mois
+                  </p>
+                </div>
+                <button
+                  id="change-password-btn"
+                  class="px-4 py-2 bg-background border rounded-md hover:bg-accent transition-colors"
+                >
+                  Changer le mot de passe
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <div id="footer-container"></div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50"></div>
+
+    <script type="module" src="../scripts/parametres.ts"></script>
+  </body>
+</html>

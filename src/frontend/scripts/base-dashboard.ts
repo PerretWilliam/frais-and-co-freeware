@@ -1,8 +1,8 @@
 import { Utilisateur } from "../types/api.types";
-import { Sidebar } from "./sidebar";
 import { Header } from "./header";
+import { Sidebar } from "./sidebar";
 import { Footer } from "./footer";
-import { renderTemplateList } from "./template-helper";
+import { renderTemplateList, renderTemplate } from "./template-helper";
 
 declare const lucide: {
   createIcons: () => void;
@@ -204,11 +204,11 @@ export abstract class BaseDashboard {
     if (!container) return;
 
     if (items.length === 0) {
-      container.innerHTML = `
-        <div class="flex items-center justify-center py-8 text-muted-foreground">
-          <p>${this.escapeHtml(emptyMessage)}</p>
-        </div>
-      `;
+      const emptyHtml = await renderTemplate(
+        "/src/frontend/templates/empty-state.tpl.html",
+        { message: emptyMessage }
+      );
+      container.innerHTML = emptyHtml;
       return;
     }
 
@@ -218,11 +218,11 @@ export abstract class BaseDashboard {
       lucide.createIcons();
     } catch (error) {
       console.error("Error rendering list:", error);
-      container.innerHTML = `
-        <div class="flex items-center justify-center py-8 text-destructive">
-          <p>Erreur lors du chargement des données</p>
-        </div>
-      `;
+      const errorHtml = await renderTemplate(
+        "/src/frontend/templates/error-state.tpl.html",
+        { message: "Erreur lors du chargement des données" }
+      );
+      container.innerHTML = errorHtml;
     }
   }
 

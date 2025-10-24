@@ -1,4 +1,5 @@
 import { Utilisateur } from "../types/api.types";
+import { renderTemplate } from "./template-helper";
 
 /**
  * Gestionnaire d'authentification
@@ -139,21 +140,25 @@ export class AuthManager {
    * Affiche les informations utilisateur dans un élément
    */
   static displayUserInfo(elementId = "user-info"): void {
+    void this.renderUserInfo(elementId);
+  }
+
+  private static async renderUserInfo(elementId: string): Promise<void> {
     const user = this.getUser();
     const element = document.getElementById(elementId);
 
     if (element && user) {
-      element.innerHTML = `
-        <div class="flex items-center gap-2">
-          <div class="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-medium">
-            ${user.prenom[0]}${user.nom_utilisateur[0]}
-          </div>
-          <div class="text-sm">
-            <p class="font-medium">${user.prenom} ${user.nom_utilisateur}</p>
-            <p class="text-muted-foreground">${user.role}</p>
-          </div>
-        </div>
-      `;
+      const initials = `${user.prenom[0]}${user.nom_utilisateur[0]}`;
+      const userInfoHtml = await renderTemplate(
+        "/src/frontend/templates/user-info.tpl.html",
+        {
+          initials,
+          prenom: user.prenom,
+          nom: user.nom_utilisateur,
+          role: user.role,
+        }
+      );
+      element.innerHTML = userInfoHtml;
     }
   }
 }

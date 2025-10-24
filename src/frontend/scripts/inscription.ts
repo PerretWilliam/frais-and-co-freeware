@@ -1,5 +1,6 @@
 import { UtilisateurService } from "../services/utilisateur.service";
 import { CreateUtilisateurData, TypeEssence, Role } from "../types/api.types";
+import { renderTemplate } from "./template-helper";
 
 // Déclaration pour Lucide (CDN)
 declare const lucide: {
@@ -148,15 +149,19 @@ function validateCurrentStep(): boolean {
  * Show error message
  */
 function showError(message: string): void {
+  void showErrorAsync(message);
+}
+
+async function showErrorAsync(message: string): Promise<void> {
   const errorDiv = document.createElement("div");
   errorDiv.className =
     "fixed top-4 right-4 bg-destructive text-destructive-foreground px-4 py-3 rounded-lg shadow-lg z-50 max-w-md";
-  errorDiv.innerHTML = `
-    <div class="flex items-center gap-2">
-      <i data-lucide="alert-circle" class="h-5 w-5"></i>
-      <p class="text-sm font-medium">${escapeHtml(message)}</p>
-    </div>
-  `;
+
+  const errorHtml = await renderTemplate(
+    "/src/frontend/templates/error-notification.tpl.html",
+    { message }
+  );
+  errorDiv.innerHTML = errorHtml;
   document.body.appendChild(errorDiv);
   lucide.createIcons();
 
@@ -201,6 +206,7 @@ function saveCurrentStepData(): void {
  */
 function updateSummary(): void {
   const summary = document.getElementById("summary") as HTMLDivElement;
+  if (!summary) return;
 
   const essenceLabels: Record<string, string> = {
     Diesel: "Diesel",
@@ -215,25 +221,49 @@ function updateSummary(): void {
   const essenceLabel =
     essenceLabels[formData.type_essence] || formData.type_essence;
 
-  summary.innerHTML = `
-    <div class="space-y-1">
-      <p><strong>Nom:</strong> ${escapeHtml(formData.nom_utilisateur)} ${escapeHtml(formData.prenom)}</p>
-      <p><strong>Email:</strong> ${escapeHtml(formData.email)}</p>
-      <p><strong>Adresse:</strong> ${escapeHtml(formData.adresse_utilisateur)}, ${escapeHtml(formData.cp_utilisateur)} ${escapeHtml(formData.ville_utilisateur)}</p>
-      <p><strong>Véhicule:</strong> ${escapeHtml(formData.marque)} ${escapeHtml(formData.modele)} (${escapeHtml(formData.plaque)})</p>
-      <p><strong>Cylindrée:</strong> ${formData.cylindree} CV</p>
-      <p><strong>Carburant:</strong> ${escapeHtml(essenceLabel)}</p>
-    </div>
-  `;
-}
+  // Clear existing content
+  summary.innerHTML = "";
 
-/**
- * Escape HTML to prevent XSS
- */
-function escapeHtml(text: string): string {
-  const div = document.createElement("div");
-  div.textContent = text;
-  return div.innerHTML;
+  // Create container div
+  const container = document.createElement("div");
+  container.className = "space-y-1";
+
+  // Helper to create a paragraph with safe text
+  const createInfoLine = (
+    label: string,
+    value: string
+  ): HTMLParagraphElement => {
+    const p = document.createElement("p");
+    const strong = document.createElement("strong");
+    strong.textContent = label + ": ";
+    p.appendChild(strong);
+    p.appendChild(document.createTextNode(value));
+    return p;
+  };
+
+  // Add all info lines
+  container.appendChild(
+    createInfoLine("Nom", `${formData.nom_utilisateur} ${formData.prenom}`)
+  );
+  container.appendChild(createInfoLine("Email", formData.email));
+  container.appendChild(
+    createInfoLine(
+      "Adresse",
+      `${formData.adresse_utilisateur}, ${formData.cp_utilisateur} ${formData.ville_utilisateur}`
+    )
+  );
+  container.appendChild(
+    createInfoLine(
+      "Véhicule",
+      `${formData.marque} ${formData.modele} (${formData.plaque})`
+    )
+  );
+  container.appendChild(
+    createInfoLine("Cylindrée", `${formData.cylindree} CV`)
+  );
+  container.appendChild(createInfoLine("Carburant", essenceLabel));
+
+  summary.appendChild(container);
 }
 
 /**
@@ -272,11 +302,13 @@ form.addEventListener("submit", async (e: Event) => {
 
   // Disable submit button
   submitBtn.disabled = true;
-  const originalButtonText = submitBtn.innerHTML;
-  submitBtn.innerHTML = `
-    <i data-lucide="loader-2" class="h-4 w-4 animate-spin"></i>
-    <span>Création en cours...</span>
-  `;
+  const originalButtonText = submitBtn.textContent || "Créer mon compte";
+
+  const loadingHtml = await renderTemplate(
+    "/src/frontend/templates/loading-button.tpl.html",
+    { text: "Création en cours..." }
+  );
+  submitBtn.innerHTML = loadingHtml;
   lucide.createIcons();
 
   try {
@@ -299,13 +331,13 @@ form.addEventListener("submit", async (e: Event) => {
           "Une erreur est survenue lors de la création du compte"
       );
       submitBtn.disabled = false;
-      submitBtn.innerHTML = originalButtonText;
+      submitBtn.textContent = originalButtonText;
     }
   } catch (error) {
     console.error("Registration error:", error);
     showError("Une erreur est survenue lors de la création du compte");
     submitBtn.disabled = false;
-    submitBtn.innerHTML = originalButtonText;
+    submitBtn.textContent = originalButtonText;
   }
 });
 
