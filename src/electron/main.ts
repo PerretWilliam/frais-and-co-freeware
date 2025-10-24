@@ -18,8 +18,28 @@ const createWindow = () => {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: false, // Sécurité: désactiver l'intégration Node dans le renderer
       contextIsolation: true, // Sécurité: isoler le contexte
+      // Content Security Policy sera géré par les meta tags HTML
     },
   });
+
+  // Content Security Policy
+  mainWindow.webContents.session.webRequest.onHeadersReceived(
+    (details, callback) => {
+      callback({
+        responseHeaders: {
+          ...details.responseHeaders,
+          "Content-Security-Policy": [
+            "default-src 'self'; " +
+              "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; " +
+              "style-src 'self' 'unsafe-inline'; " +
+              "img-src 'self' data: https:; " +
+              "connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com; " +
+              "font-src 'self' data:;",
+          ],
+        },
+      });
+    }
+  );
 
   // Charger l'interface de test si on est en mode test
   const isTestMode = process.env.TEST_MODE === "true";
@@ -40,7 +60,9 @@ const createWindow = () => {
   } else {
     // and load the index.html of the app.
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-      mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+      mainWindow.loadURL(
+        `${MAIN_WINDOW_VITE_DEV_SERVER_URL}/src/frontend/index.html`
+      );
     } else {
       mainWindow.loadFile(
         path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)

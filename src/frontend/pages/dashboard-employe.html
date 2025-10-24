@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Employé - GestionFrais Pro</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="bg-background">
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar Container -->
+      <div id="sidebar-container"></div>
+
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Header -->
+        <div id="header-container"></div>
+
+        <!-- Page Content -->
+        <main class="flex-1 overflow-y-auto p-6">
+          <div class="space-y-6">
+            <!-- Title -->
+            <div class="flex items-center justify-between">
+              <div>
+                <h1 class="text-2xl font-medium">Tableau de bord</h1>
+                <p class="text-muted-foreground">
+                  Vue d'ensemble de vos frais et remboursements
+                </p>
+              </div>
+              <button
+                id="nouveau-frais-btn"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+              >
+                <i data-lucide="plus-circle" class="h-4 w-4"></i>
+                Nouveau frais
+              </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <div class="bg-card rounded-lg border p-6">
+                <div class="flex items-center justify-between pb-2">
+                  <h3 class="text-sm font-medium">Frais en attente</h3>
+                  <i
+                    data-lucide="clock"
+                    class="h-4 w-4 text-muted-foreground"
+                  ></i>
+                </div>
+                <div class="text-2xl font-medium" id="stat-en-attente">0</div>
+                <div class="h-2 w-full bg-muted rounded-full mt-2">
+                  <div
+                    id="progress-en-attente"
+                    class="h-full bg-primary rounded-full transition-all"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+
+              <div class="bg-card rounded-lg border p-6">
+                <div class="flex items-center justify-between pb-2">
+                  <h3 class="text-sm font-medium">Total ce mois</h3>
+                  <i
+                    data-lucide="receipt"
+                    class="h-4 w-4 text-muted-foreground"
+                  ></i>
+                </div>
+                <div class="text-2xl font-medium" id="stat-total-mois">
+                  0.00 €
+                </div>
+                <p class="text-xs text-muted-foreground mt-2">
+                  +12% vs mois dernier
+                </p>
+              </div>
+
+              <div class="bg-card rounded-lg border p-6">
+                <div class="flex items-center justify-between pb-2">
+                  <h3 class="text-sm font-medium">Frais validés</h3>
+                  <i
+                    data-lucide="check-circle"
+                    class="h-4 w-4 text-muted-foreground"
+                  ></i>
+                </div>
+                <div class="text-2xl font-medium" id="stat-valides">0</div>
+                <p class="text-xs text-muted-foreground mt-2">Ce mois-ci</p>
+              </div>
+
+              <div class="bg-card rounded-lg border p-6">
+                <div class="flex items-center justify-between pb-2">
+                  <h3 class="text-sm font-medium">Dernier remboursement</h3>
+                  <i
+                    data-lucide="trending-up"
+                    class="h-4 w-4 text-muted-foreground"
+                  ></i>
+                </div>
+                <div class="text-2xl font-medium" id="stat-dernier">0.00 €</div>
+                <p
+                  class="text-xs text-muted-foreground mt-2"
+                  id="stat-dernier-date"
+                >
+                  -
+                </p>
+              </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid gap-4 lg:grid-cols-2">
+              <div class="bg-card rounded-lg border p-6">
+                <div class="mb-4">
+                  <h3 class="text-lg font-medium">Évolution mensuelle</h3>
+                  <p class="text-sm text-muted-foreground">
+                    Dépenses des 5 derniers mois
+                  </p>
+                </div>
+                <div class="h-[300px]">
+                  <canvas id="monthly-chart"></canvas>
+                </div>
+              </div>
+
+              <div class="bg-card rounded-lg border p-6">
+                <div class="mb-4">
+                  <h3 class="text-lg font-medium">Répartition par type</h3>
+                  <p class="text-sm text-muted-foreground">
+                    Distribution des frais ce mois
+                  </p>
+                </div>
+                <div class="h-[300px]">
+                  <canvas id="type-chart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Expenses -->
+            <div class="bg-card rounded-lg border p-6">
+              <div class="mb-4">
+                <h3 class="text-lg font-medium">Derniers frais déclarés</h3>
+                <p class="text-sm text-muted-foreground">
+                  Historique de vos 4 derniers frais
+                </p>
+              </div>
+              <div id="recent-expenses" class="space-y-4">
+                <!-- Populated by JavaScript -->
+              </div>
+              <button
+                id="voir-tous-btn"
+                class="w-full mt-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background text-foreground hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+              >
+                Voir tous mes frais
+              </button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-card rounded-lg border p-6">
+              <h3 class="text-lg font-medium mb-4">Raccourcis</h3>
+              <div class="grid gap-4 sm:grid-cols-3">
+                <button
+                  class="h-auto flex flex-col items-center gap-2 py-4 border rounded-md hover:bg-accent transition-colors"
+                >
+                  <i data-lucide="plus-circle" class="h-6 w-6"></i>
+                  <span class="text-sm">Nouveau frais</span>
+                </button>
+                <button
+                  class="h-auto flex flex-col items-center gap-2 py-4 border rounded-md hover:bg-accent transition-colors"
+                >
+                  <i data-lucide="upload" class="h-6 w-6"></i>
+                  <span class="text-sm">Télécharger justificatif</span>
+                </button>
+                <button
+                  class="h-auto flex flex-col items-center gap-2 py-4 border rounded-md hover:bg-accent transition-colors"
+                >
+                  <i data-lucide="help-circle" class="h-6 w-6"></i>
+                  <span class="text-sm">Aide</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <div id="footer-container"></div>
+      </div>
+    </div>
+
+    <script type="module" src="../scripts/dashboard-employe.ts"></script>
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

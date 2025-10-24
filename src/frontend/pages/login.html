@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion - GestionFrais Pro</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div class="min-h-screen flex">
+      <!-- Left side - Form -->
+      <div class="flex-1 flex items-center justify-center p-8">
+        <div class="w-full max-w-md space-y-8">
+          <div class="text-center">
+            <div
+              class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary mb-4"
+            >
+              <span class="text-2xl text-primary-foreground">GF</span>
+            </div>
+            <h1>Bienvenue sur GestionFrais Pro</h1>
+            <p class="text-muted-foreground mt-2">
+              Connectez-vous à votre compte
+            </p>
+          </div>
+
+          <!-- Error Alert -->
+          <div
+            id="error-alert"
+            class="hidden border border-destructive bg-destructive/20 text-destructive rounded-lg p-4"
+          >
+            <p class="text-sm" id="error-message"></p>
+          </div>
+
+          <form id="login-form" class="space-y-6">
+            <div class="space-y-2">
+              <label for="email" class="text-sm font-medium">Email</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="nom@entreprise.fr"
+                required
+                class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+
+            <div class="space-y-2">
+              <label for="password" class="text-sm font-medium"
+                >Mot de passe</label
+              >
+              <input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                required
+                class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  role="switch"
+                  id="remember-switch"
+                  aria-checked="false"
+                  class="peer inline-flex h-5 w-10 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 bg-switch-background"
+                >
+                  <span
+                    class="pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform translate-x-0"
+                  ></span>
+                </button>
+                <label for="remember-switch" class="text-sm cursor-pointer">
+                  Rester connecté
+                </label>
+              </div>
+              <a href="#" class="text-sm text-primary hover:underline">
+                Mot de passe oublié ?
+              </a>
+            </div>
+
+            <button
+              type="submit"
+              id="submit-btn"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 w-full"
+            >
+              Se connecter
+            </button>
+          </form>
+
+          <div class="text-center text-sm">
+            <span class="text-muted-foreground">Pas encore de compte ? </span>
+            <a href="inscription.html" class="text-primary hover:underline">
+              S'inscrire
+            </a>
+          </div>
+
+          <!-- Test accounts info -->
+          <div class="bg-muted p-4 rounded-lg space-y-2 text-sm">
+            <p class="font-medium">Comptes de test :</p>
+            <div class="space-y-1 text-muted-foreground">
+              <p>👤 employe@test.fr / Password123</p>
+              <p>💼 comptable@test.fr / Password123</p>
+              <p>⚙️ admin@test.fr / Password123</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side - Image -->
+      <div
+        class="hidden lg:flex flex-1 bg-muted items-center justify-center p-8"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=1000&fit=crop"
+          alt="Gestion d'entreprise"
+          class="rounded-2xl object-cover max-h-[80vh]"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Theme toggle -->
+      <button
+        id="theme-toggle"
+        class="fixed bottom-4 right-4 p-3 rounded-full bg-card border shadow-lg hover:shadow-xl transition-shadow"
+        aria-label="Changer le thème"
+      >
+        <i data-lucide="moon" class="h-5 w-5"></i>
+      </button>
+    </div>
+
+    <script type="module" src="../scripts/login.ts"></script>
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

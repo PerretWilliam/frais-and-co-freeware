@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscription - GestionFrais Pro</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div class="min-h-screen flex items-center justify-center p-8 bg-muted/30">
+      <div class="w-full max-w-2xl">
+        <div class="bg-card rounded-2xl shadow-xl p-8 space-y-6">
+          <div class="text-center">
+            <div
+              class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary mb-4"
+            >
+              <span class="text-2xl text-primary-foreground">GF</span>
+            </div>
+            <h1>Créer un compte</h1>
+            <p class="text-muted-foreground mt-2">
+              Étape <span id="current-step">1</span> sur 3
+            </p>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="h-2 w-full bg-muted rounded-full overflow-hidden">
+            <div
+              id="progress-bar"
+              class="h-full bg-primary transition-all duration-300"
+              style="width: 33.33%"
+            ></div>
+          </div>
+
+          <form id="inscription-form" class="space-y-6">
+            <!-- Step 1: Personal Info -->
+            <div id="step-1" class="space-y-4">
+              <h3>Informations personnelles</h3>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label for="nom" class="text-sm font-medium">Nom</label>
+                  <input
+                    id="nom"
+                    name="nom_utilisateur"
+                    type="text"
+                    required
+                    class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label for="prenom" class="text-sm font-medium">Prénom</label>
+                  <input
+                    id="prenom"
+                    name="prenom"
+                    type="text"
+                    required
+                    class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label for="email" class="text-sm font-medium"
+                  >Email professionnel</label
+                >
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="nom@entreprise.fr"
+                  required
+                  class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                />
+              </div>
+              <div class="space-y-2">
+                <label for="adresse" class="text-sm font-medium">Adresse</label>
+                <input
+                  id="adresse"
+                  name="adresse_utilisateur"
+                  type="text"
+                  required
+                  class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                />
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label for="cp" class="text-sm font-medium"
+                    >Code postal</label
+                  >
+                  <input
+                    id="cp"
+                    name="cp_utilisateur"
+                    type="text"
+                    pattern="[0-9]{5}"
+                    required
+                    class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label for="ville" class="text-sm font-medium">Ville</label>
+                  <input
+                    id="ville"
+                    name="ville_utilisateur"
+                    type="text"
+                    required
+                    class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Security -->
+            <div id="step-2" class="space-y-4 hidden">
+              <h3>Sécurité</h3>
+              <div class="space-y-2">
+                <label for="password" class="text-sm font-medium"
+                  >Mot de passe</label
+                >
+                <div class="relative">
+                  <input
+                    id="password"
+                    name="mot_de_passe"
+                    type="password"
+                    placeholder="Min. 8 caractères"
+                    required
+                    minlength="8"
+                    class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 pr-10 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  />
+                  <button
+                    type="button"
+                    id="toggle-password"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    <i data-lucide="eye" class="h-4 w-4"></i>
+                  </button>
+                </div>
+                <p class="text-xs text-muted-foreground">
+                  Le mot de passe doit contenir au moins 8 caractères
+                </p>
+              </div>
+              <div class="space-y-2">
+                <label for="confirm-password" class="text-sm font-medium"
+                  >Confirmer le mot de passe</label
+                >
+                <input
+                  id="confirm-password"
+                  type="password"
+                  required
+                  minlength="8"
+                  class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                />
+              </div>
+            </div>
+
+            <!-- Step 3: Vehicle Info -->
+            <div id="step-3" class="space-y-4 hidden">
+              <h3>Informations du véhicule</h3>
+              <div class="space-y-2">
+                <label for="plaque" class="text-sm font-medium"
+                  >Plaque d'immatriculation</label
+                >
+                <input
+                  id="plaque"
+                  name="plaque"
+                  type="text"
+                  required
+                  class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                />
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label for="marque" class="text-sm font-medium">Marque</label>
+                  <input
+                    id="marque"
+                    name="marque"
+                    type="text"
+                    required
+                    class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label for="modele" class="text-sm font-medium">Modèle</label>
+                  <input
+                    id="modele"
+                    name="modele"
+                    type="text"
+                    required
+                    class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  />
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label for="cylindree" class="text-sm font-medium"
+                    >Cylindrée (CV)</label
+                  >
+                  <input
+                    id="cylindree"
+                    name="cylindree"
+                    type="number"
+                    min="1"
+                    required
+                    class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label for="type-essence" class="text-sm font-medium"
+                    >Type d'essence</label
+                  >
+                  <select
+                    id="type-essence"
+                    name="type_essence"
+                    required
+                    class="flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  >
+                    <option value="">Sélectionner...</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="Essence95">Essence 95</option>
+                    <option value="Essence98">Essence 98</option>
+                    <option value="Électrique">Électrique</option>
+                    <option value="Éthanol">Éthanol</option>
+                    <option value="Gazole">Gazole</option>
+                    <option value="Autre">Autre</option>
+                  </select>
+                </div>
+              </div>
+              <div class="bg-muted p-4 rounded-lg space-y-2">
+                <p class="text-sm font-medium">Récapitulatif</p>
+                <div
+                  class="text-sm text-muted-foreground space-y-1"
+                  id="summary"
+                >
+                  <!-- Summary will be filled by JavaScript -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Navigation buttons -->
+            <div class="flex gap-4">
+              <button
+                type="button"
+                id="prev-btn"
+                class="hidden flex-1 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background text-foreground hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+              >
+                Précédent
+              </button>
+              <button
+                type="button"
+                id="next-btn"
+                class="flex-1 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+              >
+                Suivant
+              </button>
+              <button
+                type="submit"
+                id="submit-btn"
+                class="hidden flex-1 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+              >
+                Créer mon compte
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center text-sm">
+            <span class="text-muted-foreground"
+              >Vous avez déjà un compte ?
+            </span>
+            <a href="login.html" class="text-primary hover:underline">
+              Se connecter
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div
+      id="success-modal"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+    >
+      <div class="bg-card rounded-2xl shadow-xl p-8 max-w-md w-full mx-4">
+        <div class="text-center space-y-4">
+          <div
+            class="mx-auto w-16 h-16 flex items-center justify-center rounded-full bg-[var(--success)]/20"
+          >
+            <i data-lucide="check-circle" class="h-12 w-12 text-success"></i>
+          </div>
+          <h2 class="text-xl font-medium">Compte créé avec succès !</h2>
+          <p class="text-muted-foreground">
+            Votre compte a été créé et est en attente de validation par un
+            administrateur.
+          </p>
+          <button
+            onclick="window.location.href='login.html'"
+            class="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+          >
+            Retour à la connexion
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="../scripts/inscription.ts"></script>
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

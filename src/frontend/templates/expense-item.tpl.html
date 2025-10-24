@@ -1,0 +1,16 @@
+<div
+  class="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0"
+>
+  <div class="space-y-1">
+    <p class="font-medium">{{lieu}}</p>
+    <div class="flex items-center gap-2">
+      <span class="text-sm text-muted-foreground">{{dateFormatted}}</span>
+      <span class="text-xs px-2 py-0.5 rounded-full {{statusClass}}">
+        {{statusLabel}}
+      </span>
+    </div>
+  </div>
+  <div class="text-right">
+    <p class="font-medium">{{montantFormatted}}</p>
+  </div>
+</div>

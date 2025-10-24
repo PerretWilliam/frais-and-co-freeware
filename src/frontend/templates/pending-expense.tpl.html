@@ -1,0 +1,39 @@
+<div
+  class="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0"
+>
+  <div class="flex items-center gap-4">
+    <div
+      class="w-10 h-10 rounded-full bg-accent flex items-center justify-center"
+    >
+      <i data-lucide="user" class="w-5 h-5"></i>
+    </div>
+    <div class="space-y-1">
+      <p class="font-medium">{{lieu}}</p>
+      <div class="flex items-center gap-2">
+        <span class="text-sm text-muted-foreground">{{dateFormatted}}</span>
+        <span class="text-xs px-2 py-0.5 rounded-full {{statusClass}}">
+          {{statusLabel}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-4">
+    <div class="text-right">
+      <p class="font-medium">{{montantFormatted}}</p>
+    </div>
+    <div class="flex gap-2">
+      <button
+        class="validate-btn px-3 py-1.5 text-sm bg-success text-white rounded-md hover:bg-success/90"
+        data-id="{{id}}"
+      >
+        Valider
+      </button>
+      <button
+        class="reject-btn px-3 py-1.5 text-sm bg-destructive text-white rounded-md hover:bg-destructive/90"
+        data-id="{{id}}"
+      >
+        Refuser
+      </button>
+    </div>
+  </div>
+</div>
