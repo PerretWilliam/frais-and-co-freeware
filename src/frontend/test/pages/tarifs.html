@@ -1,0 +1,35 @@
+<div class="test-section">
+  <h3>Créer/Modifier un tarif</h3>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Cylindrée (cc)</label>
+      <input type="number" id="tarif-cylindree" placeholder="1600" />
+    </div>
+    <div class="form-group">
+      <label>Tarif au km (€)</label>
+      <input type="number" step="0.01" id="tarif-prix" placeholder="0.45" />
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-fill btn-small" onclick="fillCreateTarifForm()">
+      ✨ Remplir auto
+    </button>
+    <button class="btn btn-primary" onclick="testCreateTarif()">
+      Créer/Modifier
+    </button>
+  </div>
+  <div id="result-create-tarif" class="result-box hidden"></div>
+</div>
+
+<div class="test-section">
+  <h3>Listes</h3>
+  <div class="btn-group">
+    <button class="btn btn-secondary" onclick="testGetAllTarifs()">
+      Tous les tarifs
+    </button>
+    <button class="btn btn-secondary" onclick="testCalculateFrais()">
+      Calculer un frais
+    </button>
+  </div>
+  <div id="result-tarifs-list" class="result-box hidden"></div>
+</div>

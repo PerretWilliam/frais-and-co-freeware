@@ -22,20 +22,25 @@ export async function testFrais() {
   let successCount = 0;
   let failCount = 0;
 
+  // Générer des identifiants uniques
+  const timestamp = Date.now();
+  const testEmail = `frais.test.${timestamp}@test.com`;
+  const shortId = timestamp.toString().slice(-6);
+
   // Préparation: Créer un utilisateur de test
   console.log("\n[SETUP] Création d'un utilisateur de test...");
   try {
     const user = await UtilisateurHandler.createUtilisateur({
       nom_utilisateur: "FraisTest",
       prenom: "User",
-      email: "frais.test@test.com",
+      email: testEmail,
       mot_de_passe: "Password123!",
       adresse_utilisateur: "1 Rue Test",
       cp_utilisateur: "75000",
       ville_utilisateur: "Paris",
       role: Role.EMPLOYE,
       valide: true,
-      plaque: "FRAIS-01",
+      plaque: `FRA-${shortId}`,
       cylindree: 1600,
       marque: "TestCar",
       modele: "Model Z",
@@ -54,7 +59,7 @@ export async function testFrais() {
   console.log("[SETUP] Création d'un chantier de test...");
   try {
     const chantier = await ChantierHandler.createChantier({
-      nom_chantier: "Chantier Frais Test",
+      nom_chantier: `Chantier Frais Test ${timestamp}`,
       adresse_chantier: "50 Avenue Test",
       cp_chantier: "69000",
       ville_chantier: "Lyon",

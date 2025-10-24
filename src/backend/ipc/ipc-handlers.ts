@@ -173,5 +173,25 @@ export function registerIpcHandlers(): void {
     }
   );
 
+  // ==========================================================
+  // GESTION DES TÉLÉPHONES
+  // ==========================================================
+
+  ipcMain.handle("telephone:create", async (_, telephoneData) => {
+    return await TelephoneHandler.createTelephone(telephoneData);
+  });
+
+  ipcMain.handle("telephone:getByUser", async (_, idUtilisateur: number) => {
+    return await TelephoneHandler.getTelephonesByUtilisateur(idUtilisateur);
+  });
+
+  ipcMain.handle("telephone:update", async (_, id: number, telephoneData) => {
+    return await TelephoneHandler.updateTelephone(id, telephoneData);
+  });
+
+  ipcMain.handle("telephone:delete", async (_, id: number) => {
+    return await TelephoneHandler.deleteTelephone(id);
+  });
+
   console.log("Handlers IPC enregistrés avec succès");
 }

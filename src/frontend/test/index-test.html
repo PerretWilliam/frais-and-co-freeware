@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tests API - Frais & Co</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <h1>Tests API - Frais & Co</h1>
+        <div class="status-indicator" id="status">
+          <span class="status-dot"></span>
+          <span>Vérification...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Container -->
+    <div class="container">
+      <!-- Navigation -->
+      <nav class="tabs">
+        <button class="tab-button active" data-page="utilisateurs">
+          Utilisateurs
+        </button>
+        <button class="tab-button" data-page="chantiers">Chantiers</button>
+        <button class="tab-button" data-page="frais">Frais</button>
+        <button class="tab-button" data-page="tarifs">Grille Tarifaire</button>
+        <button class="tab-button" data-page="telephones">Téléphones</button>
+        <button class="tab-button" data-page="database">Base de données</button>
+      </nav>
+
+      <!-- Contenu dynamique chargé ici -->
+      <div id="content"></div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

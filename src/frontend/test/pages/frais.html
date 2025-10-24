@@ -1,0 +1,63 @@
+<div class="test-section">
+  <h3>Créer un frais de déplacement</h3>
+  <div class="form-row">
+    <div class="form-group">
+      <label>ID Utilisateur</label>
+      <input type="number" id="frais-user-id" placeholder="1" />
+    </div>
+    <div class="form-group">
+      <label>ID Chantier</label>
+      <input type="number" id="frais-chantier-id" placeholder="1" />
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" id="frais-date" />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Lieu de départ</label>
+      <input type="text" id="frais-depart" placeholder="Paris" />
+    </div>
+    <div class="form-group">
+      <label>Lieu d'arrivée</label>
+      <input type="text" id="frais-arrivee" placeholder="Lyon" />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Distance (km)</label>
+      <input type="number" id="frais-distance" placeholder="450" />
+    </div>
+    <div class="form-group">
+      <label>Immatriculation</label>
+      <input type="text" id="frais-immatriculation" placeholder="AB-123-CD" />
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-fill btn-small" onclick="fillCreateFraisForm()">
+      ✨ Remplir auto
+    </button>
+    <button class="btn btn-primary" onclick="testCreateFrais()">
+      Créer le frais
+    </button>
+  </div>
+  <div id="result-create-frais" class="result-box hidden"></div>
+</div>
+
+<div class="test-section">
+  <h3>Rechercher les frais</h3>
+  <div class="form-group">
+    <label>ID Utilisateur (pour filtrer)</label>
+    <input type="number" id="search-frais-user-id" placeholder="1" />
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-secondary" onclick="testGetFraisByUser()">
+      🔍 Frais de cet utilisateur
+    </button>
+    <button class="btn btn-secondary" onclick="testGetAllFrais()">
+      📋 Tous les frais
+    </button>
+  </div>
+  <div id="result-frais-list" class="result-box hidden"></div>
+</div>

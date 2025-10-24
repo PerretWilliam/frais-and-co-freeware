@@ -15,20 +15,25 @@ export async function testUtilisateurs() {
   let successCount = 0;
   let failCount = 0;
 
+  // Générer un email unique pour éviter les conflits
+  const timestamp = Date.now();
+  const testEmail = `test.user.${timestamp}@test.com`;
+  const shortId = timestamp.toString().slice(-6); // Utiliser seulement les 6 derniers chiffres
+
   // Test 1: Créer un utilisateur
   console.log("\n[TEST 1] Création d'un nouvel utilisateur...");
   try {
     const newUser = await UtilisateurHandler.createUtilisateur({
       nom_utilisateur: "TestUser",
       prenom: "Test",
-      email: "test.user@test.com",
+      email: testEmail,
       mot_de_passe: "TestPassword123!",
       adresse_utilisateur: "1 Rue du Test",
       cp_utilisateur: "75000",
       ville_utilisateur: "Paris",
       role: Role.EMPLOYE,
       valide: false,
-      plaque: "TEST-001",
+      plaque: `TST-${shortId}`,
       cylindree: 1600,
       marque: "TestCar",
       modele: "Model X",
@@ -54,7 +59,7 @@ export async function testUtilisateurs() {
   );
   try {
     const loginResult = await UtilisateurHandler.loginUtilisateur({
-      email: "test.user@test.com",
+      email: testEmail,
       password: "TestPassword123!",
     });
 
@@ -96,7 +101,7 @@ export async function testUtilisateurs() {
   console.log("\n[TEST 4] Connexion avec utilisateur validé...");
   try {
     const loginResult = await UtilisateurHandler.loginUtilisateur({
-      email: "test.user@test.com",
+      email: testEmail,
       password: "TestPassword123!",
     });
 
@@ -118,7 +123,7 @@ export async function testUtilisateurs() {
   console.log("\n[TEST 5] Tentative de connexion avec mauvais mot de passe...");
   try {
     const loginResult = await UtilisateurHandler.loginUtilisateur({
-      email: "test.user@test.com",
+      email: testEmail,
       password: "WrongPassword",
     });
 
@@ -197,7 +202,7 @@ export async function testUtilisateurs() {
 
         // Vérifier la connexion avec le nouveau mot de passe
         const loginResult = await UtilisateurHandler.loginUtilisateur({
-          email: "test.user@test.com",
+          email: testEmail,
           password: "NewPassword456!",
         });
 
@@ -260,14 +265,14 @@ export async function testUtilisateurs() {
     const duplicateUser = await UtilisateurHandler.createUtilisateur({
       nom_utilisateur: "Duplicate",
       prenom: "Test",
-      email: "test.user@test.com", // Email déjà utilisé
+      email: testEmail, // Email déjà utilisé
       mot_de_passe: "Password123!",
       adresse_utilisateur: "2 Rue du Test",
       cp_utilisateur: "75000",
       ville_utilisateur: "Paris",
       role: Role.EMPLOYE,
       valide: false,
-      plaque: "TEST-002",
+      plaque: `DUP-${shortId}`,
       cylindree: 1400,
       marque: "TestCar",
       modele: "Model Y",

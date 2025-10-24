@@ -14,11 +14,14 @@ export async function testChantiers() {
   let successCount = 0;
   let failCount = 0;
 
+  // Générer un nom unique pour éviter les conflits
+  const timestamp = Date.now();
+
   // Test 1: Créer un chantier
   console.log("\n[TEST 1] Création d'un nouveau chantier...");
   try {
     const newChantier = await ChantierHandler.createChantier({
-      nom_chantier: "Chantier Test Alpha",
+      nom_chantier: `Chantier Test ${timestamp}`,
       adresse_chantier: "10 Avenue de Test",
       cp_chantier: "75001",
       ville_chantier: "Paris",

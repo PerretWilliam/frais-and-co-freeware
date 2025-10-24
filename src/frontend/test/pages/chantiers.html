@@ -1,0 +1,43 @@
+<div class="test-section">
+  <h3>Créer un chantier</h3>
+  <div class="form-group">
+    <label>Nom du chantier</label>
+    <input type="text" id="chantier-nom" placeholder="Chantier Test" />
+  </div>
+  <div class="form-group">
+    <label>Adresse</label>
+    <input type="text" id="chantier-adresse" placeholder="123 Rue de la Paix" />
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Ville</label>
+      <input type="text" id="chantier-ville" placeholder="Paris" />
+    </div>
+    <div class="form-group">
+      <label>Code postal</label>
+      <input type="text" id="chantier-code-postal" placeholder="75001" />
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-fill btn-small" onclick="fillCreateChantierForm()">
+      ✨ Remplir auto
+    </button>
+    <button class="btn btn-primary" onclick="testCreateChantier()">
+      Créer le chantier
+    </button>
+  </div>
+  <div id="result-create-chantier" class="result-box hidden"></div>
+</div>
+
+<div class="test-section">
+  <h3>Listes et recherche</h3>
+  <div class="btn-group">
+    <button class="btn btn-secondary" onclick="testGetAllChantiers()">
+      Tous les chantiers
+    </button>
+    <button class="btn btn-secondary" onclick="testSearchChantiers()">
+      Rechercher par nom
+    </button>
+  </div>
+  <div id="result-chantiers-list" class="result-box hidden"></div>
+</div>

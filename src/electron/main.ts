@@ -21,13 +21,31 @@ const createWindow = () => {
     },
   });
 
-  // and load the index.html of the app.
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  // Charger l'interface de test si on est en mode test
+  const isTestMode = process.env.TEST_MODE === "true";
+
+  if (isTestMode) {
+    // En mode dev, charger depuis le serveur Vite
+    if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+      mainWindow.loadURL(
+        `${MAIN_WINDOW_VITE_DEV_SERVER_URL}/src/frontend/test/index-test.html`
+      );
+      console.log("Mode test activé - Interface de test chargée (dev mode)");
+    } else {
+      // En mode production, charger depuis le build
+      const testPath = path.join(__dirname, "../renderer/index-test.html");
+      mainWindow.loadFile(testPath);
+      console.log("Mode test activé - Interface de test chargée (production)");
+    }
   } else {
-    mainWindow.loadFile(
-      path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
-    );
+    // and load the index.html of the app.
+    if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+      mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+    } else {
+      mainWindow.loadFile(
+        path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
+      );
+    }
   }
 
   // Open the DevTools.
@@ -42,7 +60,7 @@ app.on("ready", async () => {
   registerIpcHandlers();
 
   // Tester la connexion à la base de données
-  console.log("🔌 Test de connexion à la base de données...");
+  console.log("Test de connexion à la base de données...");
   await testConnection();
 
   createWindow();

@@ -18,20 +18,25 @@ export async function testTelephones() {
   let successCount = 0;
   let failCount = 0;
 
+  // Générer un email unique
+  const timestamp = Date.now();
+  const testEmail = `tel.test.${timestamp}@test.com`;
+  const shortId = timestamp.toString().slice(-6); // Utiliser seulement les 6 derniers chiffres
+
   // Préparation: Créer un utilisateur de test
   console.log("\n[SETUP] Création d'un utilisateur de test...");
   try {
     const user = await UtilisateurHandler.createUtilisateur({
       nom_utilisateur: "TelTest",
       prenom: "User",
-      email: "tel.test@test.com",
+      email: testEmail,
       mot_de_passe: "Password123!",
       adresse_utilisateur: "1 Rue Test",
       cp_utilisateur: "75000",
       ville_utilisateur: "Paris",
       role: Role.EMPLOYE,
       valide: true,
-      plaque: "TEL-001",
+      plaque: `TEL-${shortId}`,
       cylindree: 1600,
       marque: "TestCar",
       modele: "Model T",
