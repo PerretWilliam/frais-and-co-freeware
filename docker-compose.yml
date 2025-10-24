@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres
+    container_name: local_pgdb
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: freeware
+      POSTGRES_PASSWORD: 9Ewg7R4CauFpa
+    volumes:
+      - local_pgdata:/var/lib/postgresql
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: freeware@hotmail.com
+      PGADMIN_DEFAULT_PASSWORD: 9Ewg7R4CauFpa
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  local_pgdata:
+  pgadmin-data:

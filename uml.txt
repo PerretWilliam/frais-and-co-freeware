@@ -1,0 +1,217 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam classAttributeFontSize 11
+skinparam classMethodFontSize 11
+
+'======================
+' ENUMERATIONS
+'======================
+enum Statut {
+  Brouillon
+  EnCours
+  Valide
+  Paye
+  Refuse
+}
+
+enum Essence {
+  Diesel
+  Ethanol
+  Autres
+  GazoIe
+  Electrique
+  SP95
+  SP98
+}
+
+'======================
+' CLASSES PRINCIPALES
+'======================
+class Utilisateur {
+  - id : int
+  - nom : String
+  - prenom : String
+  - email : String
+  - motDePasse : String
+  - telephone : Telephone
+  - adresse : String
+  - valide : boolean
+
+  + seConnecter(email:String, motDePasse:String): boolean
+  + creeCompte(): boolean
+  + modifierProfil(nom:String, prenom:String, email:String, telephone:Telephone, adresse:String): void
+  + changerMotDePasse(ancienMdp:String, nouveauMdp:String): void
+  + getNom(): String
+  + getPrenom(): String
+  + getEmail(): String
+  + getMotDePasse(): String
+  + getTelephone(): Telephone
+  + getAdresse(): String
+  + isValide(): boolean
+  + setNom(nom:String): void
+  + setPrenom(prenom:String): void
+  + setEmail(email:String): void
+  + setMotDePasse(mdp:String): void
+  + setTelephone(tel:Telephone): void
+  + setAdresse(adr:String): void
+  + setValide(valide:boolean): void
+}
+
+class Employe {
+  + saisirFrais(frais:Frais): void
+  + validerFrais(frais:Frais): void
+  + consulterFrais(): List<Frais>
+  + modifierFrais(frais:Frais): void
+  + supprimerFrais(frais:Frais): void
+}
+
+class Comptable {
+  + controlerFrais(frais:Frais): void
+  + accepterFrais(frais:Frais): void
+  + refuserFrais(frais:Frais): void
+  + mettreEnPaiement(frais:Frais): void
+  + confirmerPaiement(frais:Frais): void
+  + listerFraisEnAttente(): List<Frais>
+  + calculerTotalFraisValides(liste:List<Frais>): double
+}
+
+class Administrateur {
+  + modifierCompte(user:Utilisateur): void
+  + supprimerCompte(user:Utilisateur): void
+  + validerCompte(user:Utilisateur): void
+  + listerComptesNonValides(): List<Utilisateur>
+}
+
+'======================
+' CLASSES DE DONNÉES
+'======================
+class Frais {
+  - idFrais : int
+  - date : Date
+  - montant : double
+  - justificatif : String
+  - statut : Statut
+  - createLe : Date
+
+  + getIdFrais(): int
+  + getDate(): Date
+  + getMontant(): double
+  + getJustificatif(): String
+  + getStatut(): Statut
+  + getCreateLe(): Date
+  + setStatut(statut:Statut): void
+  + setMontant(montant:double): void
+  + setJustificatif(justif:String): void
+  + estValide(): boolean
+  + changerStatut(nouveauStatut:Statut): void
+  + ajouterJustificatif(chemin:String): boolean
+  + genererResume(): String
+}
+
+class FraisHebergement {
+  - nbNuits : int
+  - dateDebut : Date
+  - dateFin : Date
+  - nomEtablissement : String
+
+  + calculerMontant(tarifNuit:double): double
+  + calculerDuree(): long
+  + getNomEtablissement(): String
+}
+
+class FraisDeplacement {
+  - villeDepart : String
+  - villeArrivee : String
+  - distanceKm : double
+
+  + calculerDistance(): double
+  + calculerMontant(tarifKm:double): double
+  + setDistance(distance:double): void
+}
+
+class FraisRepas {
+  - typeRepas : String
+
+  + calculerMontant(tarifRepas:double): double
+  + getTypeRepas(): String
+}
+
+class Voiture {
+  - plaque : String
+  - personnel : boolean
+  - type_essence : Essence
+  - cylindree : int
+  - marque : String
+  - modele : String
+
+  + calculerConsommation(distance:double): double
+  + calculerCoutCarburant(prixLitre:double, consommation:double): double
+  + getTypeEssence(): String
+  + getPlaque(): String
+  + setPlaque(plaque:String): void
+}
+
+class GrilleTarifaire {
+  - cylindree : int
+  - tarifKm : float
+
+  + getTarifKm(): double
+  + setTarifKm(tarif:float): void
+  + calculerTarif(distance:double): double
+}
+
+class Chantier {
+  - idChantier : int
+  - nomChantier : String
+  - adresseChantier : String
+  - cpChantier : String
+  - villeChantier : String
+
+  + getAdresseComplete(): String
+  + getFraisAssocies(): List<Frais>
+  + calculerTotalFrais(): double
+}
+
+class ServiceMail {
+  + envoyerNotification(email:String, sujet:String, message:String): void
+  + envoyerValidationCompte(email:String): void
+  + envoyerRefusFrais(email:String, motif:String): void
+  + envoyerConfirmationPaiement(email:String): void
+}
+
+class GoogleMapsAPI {
+  + prendreDistance(depart:String, arriver:String): double
+  + calculerCoutDeplacement(depart:String, arriver:String, tarifKm:double): double
+}
+
+class Telephone {
+  - indicPays : String
+  - indicRegion : String
+  - numero : String
+}
+
+'======================
+' RELATIONS CORRIGÉES
+'======================
+Utilisateur <|-- Employe
+Utilisateur <|-- Comptable
+Utilisateur <|-- Administrateur
+
+Utilisateur "1" --> "1" Telephone
+Utilisateur "1" --> "1" Voiture
+
+Employe "1" --> "0..*" Frais
+Chantier "1" --> "0..*" Frais
+Frais --> Statut
+
+Frais <|-- FraisHebergement
+Frais <|-- FraisDeplacement
+Frais <|-- FraisRepas
+
+FraisDeplacement --> GoogleMapsAPI
+Comptable --> ServiceMail
+ServiceMail --> Utilisateur
+Voiture --> Essence
+
+@enduml
