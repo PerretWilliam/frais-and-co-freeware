@@ -3,3 +3,5 @@ export { DashboardComptablePage } from "./dashboard-comptable-page";
 export { DashboardAdminPage } from "./dashboard-admin-page";
 export { ProfilPage } from "./profil-page";
 export { ParametresPage } from "./parametres-page";
+export { MesFraisPage } from "./mes-frais-page";
+export { FraisGlobauxPage } from "./frais-globaux-page";

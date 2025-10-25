@@ -13,6 +13,8 @@ import {
   DashboardAdminPage,
   ProfilPage,
   ParametresPage,
+  MesFraisPage,
+  FraisGlobauxPage,
 } from "./pages";
 
 declare const lucide: {
@@ -142,7 +144,7 @@ class App {
         title: "Mes frais",
         roles: [Role.EMPLOYE],
         component: async () => {
-          await this.renderPlaceholder("Mes frais", "Liste de vos frais");
+          await new MesFraisPage().render();
         },
       },
 
@@ -165,10 +167,7 @@ class App {
         title: "Tous les frais",
         roles: [Role.COMPTABLE, Role.ADMIN],
         component: async () => {
-          await this.renderPlaceholder(
-            "Tous les frais",
-            "Liste de tous les frais"
-          );
+          await new FraisGlobauxPage().render();
         },
       },
 
