@@ -11,10 +11,11 @@ const SECRET_KEY = process.env.AES_SECRET_KEY;
 
 /**
  * Génère un salt aléatoire unique pour chaque utilisateur
+ * Réduit à 16 bytes (32 caractères hex) pour ne pas dépasser la limite bcrypt de 72 caractères
  * @returns Salt en format hexadécimal
  */
 export function generateSalt(): string {
-  return crypto.randomBytes(32).toString("hex");
+  return crypto.randomBytes(16).toString("hex");
 }
 
 /**

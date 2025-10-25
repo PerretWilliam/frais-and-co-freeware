@@ -108,19 +108,8 @@ export class AuthManager {
       return;
     }
 
-    switch (user.role) {
-      case "employe":
-        window.location.href = "/src/frontend/pages/dashboard-employe.html";
-        break;
-      case "comptable":
-        window.location.href = "/src/frontend/pages/dashboard-comptable.html";
-        break;
-      case "admin":
-        window.location.href = "/src/frontend/pages/dashboard-admin.html";
-        break;
-      default:
-        window.location.href = "/src/frontend/pages/login.html";
-    }
+    // Redirection vers l'application SPA (app.html) qui gère le routing
+    window.location.href = "/src/frontend/pages/app.html";
   }
 
   /**

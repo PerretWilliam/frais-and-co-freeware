@@ -1,0 +1,123 @@
+<div class="p-6 space-y-6">
+  <div>
+    <h1 class="text-3xl font-bold tracking-tight">Tableau de bord Comptable</h1>
+    <p class="text-muted-foreground">
+      Vue d'ensemble de tous les frais et validations
+    </p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div class="bg-card border rounded-lg p-6">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-sm font-medium text-muted-foreground">
+          Frais en attente
+        </p>
+        <i data-lucide="clock" class="h-4 w-4 text-[var(--chart-pending)]"></i>
+      </div>
+      <p id="stat-en-attente" class="text-2xl font-bold">-</p>
+      <p class="text-xs text-muted-foreground mt-2">À valider rapidement</p>
+    </div>
+
+    <div class="bg-card border rounded-lg p-6">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-sm font-medium text-muted-foreground">
+          En cours de paiement
+        </p>
+        <i data-lucide="dollar-sign" class="h-4 w-4 text-[var(--info)]"></i>
+      </div>
+      <p id="stat-en-cours" class="text-2xl font-bold">-</p>
+      <p class="text-xs text-muted-foreground mt-2">Validés ce mois</p>
+    </div>
+
+    <div class="bg-card border rounded-lg p-6">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-sm font-medium text-muted-foreground">
+          Montant moyen/employé
+        </p>
+        <i data-lucide="trending-up" class="h-4 w-4 text-[var(--success)]"></i>
+      </div>
+      <p id="stat-moyen" class="text-2xl font-bold">-</p>
+      <p class="text-xs text-muted-foreground mt-2">Ce mois-ci</p>
+    </div>
+
+    <div class="bg-card border rounded-lg p-6">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-sm font-medium text-muted-foreground">
+          Taux de validation
+        </p>
+        <i data-lucide="check-circle" class="h-4 w-4 text-[var(--success)]"></i>
+      </div>
+      <p id="stat-taux" class="text-2xl font-bold">-</p>
+      <p class="text-xs text-muted-foreground mt-2">+5% vs mois dernier</p>
+    </div>
+  </div>
+
+  <!-- Alert -->
+  <div id="alert-container"></div>
+
+  <!-- Charts -->
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="bg-card border rounded-lg p-6">
+      <h2 class="text-lg font-semibold mb-1">Évolution des validations</h2>
+      <p class="text-sm text-muted-foreground mb-4">
+        Frais validés et refusés par mois
+      </p>
+      <div class="h-64">
+        <canvas id="validation-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-card border rounded-lg p-6">
+      <h2 class="text-lg font-semibold mb-1">Répartition par type</h2>
+      <p class="text-sm text-muted-foreground mb-4">
+        Montants totaux par catégorie de frais
+      </p>
+      <div class="h-64">
+        <canvas id="type-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="bg-card border rounded-lg p-6">
+    <h2 class="text-lg font-semibold mb-4">Dernières validations</h2>
+    <div id="recent-validations" class="space-y-4"></div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="grid gap-4 md:grid-cols-3">
+    <div
+      class="bg-card border rounded-lg p-6 cursor-pointer hover:shadow-lg transition-shadow"
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <i data-lucide="clock" class="h-5 w-5 text-[var(--chart-pending)]"></i>
+        <h3 class="text-lg font-semibold">Frais en attente</h3>
+      </div>
+      <p id="quick-en-attente" class="text-3xl font-bold">-</p>
+      <p class="text-sm text-muted-foreground mt-2">À valider</p>
+    </div>
+
+    <div
+      class="bg-card border rounded-lg p-6 cursor-pointer hover:shadow-lg transition-shadow"
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <i data-lucide="dollar-sign" class="h-5 w-5 text-[var(--info)]"></i>
+        <h3 class="text-lg font-semibold">En cours</h3>
+      </div>
+      <p id="quick-en-cours" class="text-3xl font-bold">-</p>
+      <p class="text-sm text-muted-foreground mt-2">Paiement en cours</p>
+    </div>
+
+    <div
+      class="bg-card border rounded-lg p-6 cursor-pointer hover:shadow-lg transition-shadow"
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <i data-lucide="check-circle" class="h-5 w-5 text-[var(--success)]"></i>
+        <h3 class="text-lg font-semibold">Payés</h3>
+      </div>
+      <p id="quick-payes" class="text-3xl font-bold">-</p>
+      <p class="text-sm text-muted-foreground mt-2">Ce mois</p>
+    </div>
+  </div>
+</div>

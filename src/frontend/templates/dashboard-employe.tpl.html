@@ -1,0 +1,71 @@
+<div class="p-6">
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold tracking-tight">Tableau de bord</h1>
+    <p class="text-muted-foreground">Vue d'ensemble de vos frais</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
+    <div class="bg-card border rounded-lg p-6">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-sm font-medium text-muted-foreground">En attente</p>
+        <i data-lucide="clock" class="h-4 w-4 text-muted-foreground"></i>
+      </div>
+      <p id="stat-en-attente" class="text-2xl font-bold">-</p>
+      <div class="mt-2 h-2 bg-secondary rounded-full overflow-hidden">
+        <div
+          id="progress-en-attente"
+          class="h-full bg-primary transition-all"
+          style="width: 0%"
+        ></div>
+      </div>
+    </div>
+
+    <div class="bg-card border rounded-lg p-6">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-sm font-medium text-muted-foreground">Total mois</p>
+        <i data-lucide="euro" class="h-4 w-4 text-muted-foreground"></i>
+      </div>
+      <p id="stat-total-mois" class="text-2xl font-bold">-</p>
+    </div>
+
+    <div class="bg-card border rounded-lg p-6">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-sm font-medium text-muted-foreground">Validés</p>
+        <i data-lucide="check-circle" class="h-4 w-4 text-muted-foreground"></i>
+      </div>
+      <p id="stat-valides" class="text-2xl font-bold">-</p>
+    </div>
+
+    <div class="bg-card border rounded-lg p-6">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-sm font-medium text-muted-foreground">Dernier frais</p>
+        <i data-lucide="receipt" class="h-4 w-4 text-muted-foreground"></i>
+      </div>
+      <p id="stat-dernier" class="text-2xl font-bold">-</p>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="grid gap-6 md:grid-cols-2 mb-6">
+    <div class="bg-card border rounded-lg p-6">
+      <h2 class="text-lg font-semibold mb-4">Évolution mensuelle</h2>
+      <div class="h-64">
+        <canvas id="monthly-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-card border rounded-lg p-6">
+      <h2 class="text-lg font-semibold mb-4">Répartition par type</h2>
+      <div class="h-64">
+        <canvas id="type-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Expenses -->
+  <div class="bg-card border rounded-lg p-6">
+    <h2 class="text-lg font-semibold mb-4">Frais récents</h2>
+    <div id="recent-expenses" class="space-y-3"></div>
+  </div>
+</div>

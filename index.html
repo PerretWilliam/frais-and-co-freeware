@@ -4,36 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GestionFrais Pro</title>
-    <link rel="stylesheet" href="styles/index.css" />
   </head>
-  <body class="min-h-screen flex items-center justify-center bg-muted/30">
-    <div class="text-center space-y-8 p-8">
-      <div
-        class="inline-flex h-24 w-24 items-center justify-center rounded-2xl bg-primary mb-4"
+  <body>
+    <script>
+      // Ce fichier ne devrait pas être utilisé en production
+      // Redirection vers le point d'entrée correct
+      window.location.href = "/src/frontend/pages/login.html";
+    </script>
+    <noscript>
+      <p>JavaScript est requis pour utiliser cette application.</p>
+      <a href="/src/frontend/pages/login.html"
+        >Cliquez ici pour vous connecter</a
       >
-        <span class="text-4xl text-primary-foreground font-bold">GF</span>
-      </div>
-      <h1 class="text-3xl">Bienvenue sur GestionFrais Pro</h1>
-      <div class="flex flex-col gap-4 max-w-md mx-auto">
-        <a
-          href="pages/login.html"
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 py-2"
-        >
-          Se connecter
-        </a>
-        <a
-          href="pages/inscription.html"
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all border bg-background text-foreground hover:bg-accent hover:text-accent-foreground h-10 px-6 py-2"
-        >
-          Créer un compte
-        </a>
-        <a
-          href="test/index-test.html"
-          class="text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          Accéder aux tests
-        </a>
-      </div>
-    </div>
+    </noscript>
   </body>
 </html>

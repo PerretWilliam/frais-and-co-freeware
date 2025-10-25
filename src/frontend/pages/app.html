@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GestionFrais Pro</title>
+    <link rel="stylesheet" href="../styles/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  </head>
+  <body class="bg-background text-foreground">
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar -->
+      <div id="sidebar-container"></div>
+
+      <!-- Main content -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Header -->
+        <div id="header-container"></div>
+
+        <!-- Page content (router outlet) -->
+        <main id="router-outlet" class="flex-1 overflow-y-auto"></main>
+
+        <!-- Footer -->
+        <div id="footer-container"></div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50"></div>
+
+    <script type="module" src="../scripts/app.ts"></script>
+  </body>
+</html>

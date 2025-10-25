@@ -263,37 +263,6 @@ type_essence_enum   -- Diesel | Éthanol | Électrique | Essence95 | Essence98 |
 - **Docker** - Containerisation PostgreSQL
 - **Docker Compose** - Orchestration
 
-## 📈 Roadmap
-
-### Phase 1 - ✅ Complétée
-
-- [x] Architecture backend complète
-- [x] 6 services avec 40+ méthodes
-- [x] Intégration PostgreSQL
-- [x] Tests fonctionnels
-- [x] Documentation complète
-
-### Phase 2 - 🔄 En cours
-
-- [ ] Interface utilisateur (React/Vue)
-- [ ] Composants réutilisables
-- [ ] Gestion des états (Redux/Vuex)
-- [ ] Design système
-
-### Phase 3 - 🔲 Planifiée
-
-- [ ] Tests unitaires (Jest)
-- [ ] Tests d'intégration
-- [ ] CI/CD (GitHub Actions)
-- [ ] Déploiement automatisé
-
-### Phase 4 - 🔲 Future
-
-- [ ] Rapports PDF
-- [ ] Export Excel
-- [ ] Notifications email
-- [ ] API REST (optionnel)
-
 ## 👥 Équipe
 
 - **Akono Josua**
@@ -301,10 +270,6 @@ type_essence_enum   -- Diesel | Éthanol | Électrique | Essence95 | Essence98 |
 - **Benjabir Jawad**
 - **Ercan Saban-Can**
 - **Perret William**
-
-## 📄 Licence
-
-MIT License - Voir [LICENSE](./LICENSE) pour plus de détails
 
 ## 🤝 Contribution
 

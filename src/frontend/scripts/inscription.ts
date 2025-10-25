@@ -79,10 +79,19 @@ function updateProgress(): void {
   step2.classList.toggle("hidden", currentStep !== 2);
   step3.classList.toggle("hidden", currentStep !== 3);
 
-  // Show/hide buttons
+  // Show/hide buttons based on current step
+  // Précédent: caché à l'étape 1
   prevBtn.classList.toggle("hidden", currentStep === 1);
+
+  // Suivant: caché à l'étape 3 (dernière étape)
   nextBtn.classList.toggle("hidden", currentStep === totalSteps);
+
+  // Submit: visible uniquement à l'étape 3
   submitBtn.classList.toggle("hidden", currentStep !== totalSteps);
+
+  // Disable/enable buttons properly
+  prevBtn.disabled = currentStep === 1;
+  nextBtn.disabled = currentStep === totalSteps;
 
   // Update summary on step 3
   if (currentStep === 3) {
