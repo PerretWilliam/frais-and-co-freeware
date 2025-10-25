@@ -1,0 +1,16 @@
+<tr class="hover:bg-muted/50">
+  <td class="px-4 py-3 text-sm">{{date}}</td>
+  <td class="px-4 py-3 text-sm">{{type}}</td>
+  <td class="px-4 py-3 text-sm">{{description}}</td>
+  <td class="px-4 py-3 text-sm">
+    <span
+      class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full {{statusClass}}"
+    >
+      {{statusLabel}}
+    </span>
+  </td>
+  <td class="px-4 py-3 text-sm text-right">{{montant}}</td>
+  <td class="px-4 py-3 text-sm text-right">
+    <div class="flex justify-end gap-2">{{{actions}}}</div>
+  </td>
+</tr>

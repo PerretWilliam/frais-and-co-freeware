@@ -54,7 +54,7 @@ export class Header {
 
     if (this.dropdownOpen) {
       const html = await renderTemplate(
-        "/src/frontend/templates/header-dropdown.tpl.html",
+        "/src/frontend/templates/layout/header-dropdown.tpl.html",
         {}
       );
       dropdownContainer.innerHTML = html;
@@ -122,7 +122,7 @@ export class Header {
     const roleColor = this.user?.role ? ROLE_COLORS[this.user.role] : "";
 
     const html = await renderTemplate(
-      "/src/frontend/templates/header.tpl.html",
+      "/src/frontend/templates/layout/header.tpl.html",
       {
         initials,
         prenom: this.user?.prenom || "",

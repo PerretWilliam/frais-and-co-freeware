@@ -67,12 +67,7 @@ const MENU_ITEMS: MenuItem[] = [
     icon: "mail",
     roles: [Role.COMPTABLE, Role.ADMIN],
   },
-  {
-    id: "administration",
-    label: "Administration",
-    icon: "shield",
-    roles: [Role.ADMIN],
-  },
+
   {
     id: "aide",
     label: "Aide",
@@ -170,7 +165,7 @@ export class Sidebar {
             : "text-sidebar-foreground hover:bg-sidebar-accent/50";
 
         return await renderTemplate(
-          "/src/frontend/templates/sidebar-menu-item.tpl.html",
+          "/src/frontend/templates/layout/sidebar-menu-item.tpl.html",
           {
             id: item.id,
             icon: item.icon,
@@ -186,10 +181,10 @@ export class Sidebar {
       : "-translate-x-full lg:translate-x-0";
 
     const sidebarHtml = await renderTemplate(
-      "/src/frontend/templates/sidebar.tpl.html",
+      "/src/frontend/templates/layout/sidebar.tpl.html",
       {
         openClass,
-        menuItemsHtml: menuItemsHtml.join("\n"),
+        menuItems: menuItemsHtml.join("\n"),
       }
     );
 

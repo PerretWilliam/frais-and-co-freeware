@@ -1,0 +1,218 @@
+<div class="p-6">
+  <div class="max-w-4xl mx-auto space-y-6">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">Paramètres</h1>
+      <p class="text-muted-foreground mt-2">
+        Gérez vos préférences et paramètres de compte
+      </p>
+    </div>
+
+    <!-- Account Info Card -->
+    <div class="bg-card border rounded-lg shadow-sm">
+      <div class="p-6 border-b">
+        <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="user" class="h-5 w-5"></i>
+          <h2 class="text-xl font-semibold">Informations du compte</h2>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Vos informations personnelles
+        </p>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="space-y-2">
+            <label class="text-sm font-medium">Email</label>
+            <input
+              type="email"
+              id="account-email"
+              class="w-full px-3 py-2 bg-background border rounded-md"
+              value="{{email}}"
+              disabled
+            />
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium">Rôle</label>
+            <input
+              type="text"
+              id="account-role"
+              class="w-full px-3 py-2 bg-background border rounded-md"
+              value="{{roleLabel}}"
+              disabled
+            />
+          </div>
+        </div>
+        <button
+          id="edit-profile-btn"
+          class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+        >
+          Modifier mon profil
+        </button>
+      </div>
+    </div>
+
+    <!-- Appearance Card -->
+    <div class="bg-card border rounded-lg shadow-sm">
+      <div class="p-6 border-b">
+        <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="moon" class="h-5 w-5"></i>
+          <h2 class="text-xl font-semibold">Apparence</h2>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Personnalisez l'apparence de l'application
+        </p>
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between">
+          <div class="space-y-0.5">
+            <label class="text-sm font-medium">Thème sombre</label>
+            <p class="text-sm text-muted-foreground">
+              Activer le mode sombre pour réduire la fatigue oculaire
+            </p>
+          </div>
+          <button
+            id="theme-toggle"
+            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 {{themeToggleClass}}"
+            role="switch"
+            aria-checked="{{isDark}}"
+          >
+            <span
+              class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform {{themeThumbClass}}"
+              id="theme-toggle-thumb"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Card -->
+    <div class="bg-card border rounded-lg shadow-sm">
+      <div class="p-6 border-b">
+        <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="bell" class="h-5 w-5"></i>
+          <h2 class="text-xl font-semibold">Notifications</h2>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Gérez vos préférences de notifications
+        </p>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="space-y-4">
+          <!-- Email Notifications -->
+          <div class="flex items-center justify-between">
+            <div class="space-y-0.5">
+              <label class="text-sm font-medium">Notifications par email</label>
+              <p class="text-sm text-muted-foreground">
+                Recevoir des notifications par email
+              </p>
+            </div>
+            <button
+              class="notification-toggle relative inline-flex h-6 w-11 items-center rounded-full transition-colors {{emailToggleClass}}"
+              role="switch"
+              aria-checked="{{emailEnabled}}"
+              data-setting="email"
+            >
+              <span
+                class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform {{emailThumbClass}}"
+              ></span>
+            </button>
+          </div>
+
+          <div class="border-t"></div>
+
+          <div class="flex items-center justify-between">
+            <div class="space-y-0.5">
+              <label class="text-sm font-medium">Frais validés</label>
+              <p class="text-sm text-muted-foreground">
+                Être notifié quand un frais est validé
+              </p>
+            </div>
+            <button
+              class="notification-toggle relative inline-flex h-6 w-11 items-center rounded-full transition-colors {{fraisValidesToggleClass}}"
+              role="switch"
+              aria-checked="{{fraisValidesEnabled}}"
+              data-setting="fraisValides"
+            >
+              <span
+                class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform {{fraisValidesThumbClass}}"
+              ></span>
+            </button>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="space-y-0.5">
+              <label class="text-sm font-medium">Frais refusés</label>
+              <p class="text-sm text-muted-foreground">
+                Être notifié quand un frais est refusé
+              </p>
+            </div>
+            <button
+              class="notification-toggle relative inline-flex h-6 w-11 items-center rounded-full transition-colors {{fraisRefusesToggleClass}}"
+              role="switch"
+              aria-checked="{{fraisRefusesEnabled}}"
+              data-setting="fraisRefuses"
+            >
+              <span
+                class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform {{fraisRefusesThumbClass}}"
+              ></span>
+            </button>
+          </div>
+
+          {{{nouveauxFrais}}}
+
+          <div class="flex items-center justify-between">
+            <div class="space-y-0.5">
+              <label class="text-sm font-medium">Rappels</label>
+              <p class="text-sm text-muted-foreground">
+                Recevoir des rappels pour les actions en attente
+              </p>
+            </div>
+            <button
+              class="notification-toggle relative inline-flex h-6 w-11 items-center rounded-full transition-colors {{rappelsToggleClass}}"
+              role="switch"
+              aria-checked="{{rappelsEnabled}}"
+              data-setting="rappels"
+            >
+              <span
+                class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform {{rappelsThumbClass}}"
+              ></span>
+            </button>
+          </div>
+        </div>
+
+        <button
+          id="save-notifications-btn"
+          class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+        >
+          Enregistrer les préférences
+        </button>
+      </div>
+    </div>
+
+    <!-- Security Card -->
+    <div class="bg-card border rounded-lg shadow-sm">
+      <div class="p-6 border-b">
+        <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="lock" class="h-5 w-5"></i>
+          <h2 class="text-xl font-semibold">Sécurité</h2>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Gérez la sécurité de votre compte
+        </p>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="space-y-2">
+          <label class="text-sm font-medium">Mot de passe</label>
+          <p class="text-sm text-muted-foreground">
+            Dernière modification : Il y a 3 mois
+          </p>
+        </div>
+        <button
+          id="change-password-btn"
+          class="px-4 py-2 bg-background border rounded-md hover:bg-accent transition-colors"
+        >
+          Changer le mot de passe
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

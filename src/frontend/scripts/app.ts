@@ -222,19 +222,6 @@ class App {
         },
       },
 
-      // Administration (admin only)
-      {
-        path: "/administration",
-        title: "Administration",
-        roles: [Role.ADMIN],
-        component: async () => {
-          await this.renderPlaceholder(
-            "Administration",
-            "Paramètres d'administration"
-          );
-        },
-      },
-
       // Aide
       {
         path: "/aide",
@@ -292,7 +279,7 @@ class App {
     if (!outlet) return;
 
     const html = await renderTemplate(
-      "/src/frontend/templates/dashboard-placeholder.tpl.html",
+      "/src/frontend/templates/pages/dashboard-placeholder.tpl.html",
       {
         icon: "construction",
         title,

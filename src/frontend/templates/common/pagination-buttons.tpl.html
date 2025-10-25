@@ -1,0 +1,17 @@
+<button
+  onclick="window.{{pageName}}.goToPage({{prevPage}})"
+  class="px-3 py-1 text-sm border rounded-md hover:bg-accent"
+  {{disablePreviousAttr}}
+>
+  <i data-lucide="chevron-left" class="w-4 h-4"></i>
+</button>
+
+{{{pageButtons}}}
+
+<button
+  onclick="window.{{pageName}}.goToPage({{nextPage}})"
+  class="px-3 py-1 text-sm border rounded-md hover:bg-accent"
+  {{disableNextAttr}}
+>
+  <i data-lucide="chevron-right" class="w-4 h-4"></i>
+</button>

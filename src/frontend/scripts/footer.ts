@@ -14,7 +14,7 @@ export class Footer {
 
   private async render(): Promise<void> {
     const footerHtml = await renderTemplate(
-      "/src/frontend/templates/footer.tpl.html",
+      "/src/frontend/templates/layout/footer.tpl.html",
       {}
     );
     this.container.innerHTML = footerHtml;

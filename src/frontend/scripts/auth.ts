@@ -139,7 +139,7 @@ export class AuthManager {
     if (element && user) {
       const initials = `${user.prenom[0]}${user.nom_utilisateur[0]}`;
       const userInfoHtml = await renderTemplate(
-        "/src/frontend/templates/user-info.tpl.html",
+        "/src/frontend/templates/components/users/user-info.tpl.html",
         {
           initials,
           prenom: user.prenom,

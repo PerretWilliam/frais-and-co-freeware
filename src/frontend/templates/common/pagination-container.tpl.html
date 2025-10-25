@@ -1,0 +1,18 @@
+<div class="text-sm text-muted-foreground">{{showing}}</div>
+<div class="flex items-center gap-1">
+  <button
+    class="btn-prev-page px-3 py-1 text-sm border rounded-md hover:bg-accent {{prevClasses}}"
+    {{prevDisabled}}
+  >
+    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+  </button>
+
+  {{{pageButtons}}}
+
+  <button
+    class="btn-next-page px-3 py-1 text-sm border rounded-md hover:bg-accent {{nextClasses}}"
+    {{nextDisabled}}
+  >
+    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+  </button>
+</div>

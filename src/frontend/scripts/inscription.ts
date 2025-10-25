@@ -167,7 +167,7 @@ async function showErrorAsync(message: string): Promise<void> {
     "fixed top-4 right-4 bg-destructive text-destructive-foreground px-4 py-3 rounded-lg shadow-lg z-50 max-w-md";
 
   const errorHtml = await renderTemplate(
-    "/src/frontend/templates/error-notification.tpl.html",
+    "/src/frontend/templates/common/error-notification.tpl.html",
     { message }
   );
   errorDiv.innerHTML = errorHtml;
@@ -314,7 +314,7 @@ form.addEventListener("submit", async (e: Event) => {
   const originalButtonText = submitBtn.textContent || "Créer mon compte";
 
   const loadingHtml = await renderTemplate(
-    "/src/frontend/templates/loading-button.tpl.html",
+    "/src/frontend/templates/common/loading-button.tpl.html",
     { text: "Création en cours..." }
   );
   submitBtn.innerHTML = loadingHtml;

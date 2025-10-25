@@ -78,7 +78,7 @@ loginForm.addEventListener("submit", async (e: Event) => {
   const originalText = submitBtn.textContent || "Se connecter";
 
   const loadingHtml = await renderTemplate(
-    "/src/frontend/templates/loading-button.tpl.html",
+    "/src/frontend/templates/common/loading-button.tpl.html",
     { text: "Connexion en cours..." }
   );
   submitBtn.innerHTML = loadingHtml;

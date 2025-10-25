@@ -30,7 +30,7 @@ const createWindow = () => {
           ...details.responseHeaders,
           "Content-Security-Policy": [
             "default-src 'self'; " +
-              "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; " +
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com; " +
               "style-src 'self' 'unsafe-inline'; " +
               "img-src 'self' data: https:; " +
               "connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com; " +

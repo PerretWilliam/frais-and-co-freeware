@@ -1,0 +1,39 @@
+<tr class="border-t hover:bg-muted/50" data-user-id="{{id_utilisateur}}">
+  <td class="p-4">
+    <div class="flex items-center gap-3">
+      <div
+        class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center font-semibold text-primary"
+      >
+        {{initials}}
+      </div>
+      <div>
+        <p class="font-medium">{{prenom}} {{nom_utilisateur}}</p>
+      </div>
+    </div>
+  </td>
+  <td class="p-4">{{email}}</td>
+  <td class="p-4">
+    <span class="{{roleClass}} px-2.5 py-0.5 rounded-full text-xs font-medium">
+      {{roleLabel}}
+    </span>
+  </td>
+  <td class="p-4">
+    <span
+      class="{{statusClass}} px-2.5 py-0.5 rounded-full text-xs font-medium inline-flex items-center gap-1"
+    >
+      {{{statusIcon}}} {{statusLabel}}
+    </span>
+  </td>
+  <td class="p-4">
+    <div class="flex justify-end gap-2">
+      <button
+        class="btn-edit p-2 hover:bg-muted rounded-md transition-colors"
+        data-user-id="{{id_utilisateur}}"
+        title="Modifier"
+      >
+        <i data-lucide="edit" class="h-4 w-4"></i>
+      </button>
+      {{{deleteButton}}}
+    </div>
+  </td>
+</tr>

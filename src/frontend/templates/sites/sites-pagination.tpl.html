@@ -1,0 +1,17 @@
+<button
+  onclick="window.chantiersPage.goToPage({{prevPage}})"
+  class="px-3 py-1 text-sm border rounded-md hover:bg-accent {{prevClasses}}"
+  {{prevDisabled}}
+>
+  <i data-lucide="chevron-left" class="w-4 h-4"></i>
+</button>
+
+{{{pageButtons}}}
+
+<button
+  onclick="window.chantiersPage.goToPage({{nextPage}})"
+  class="px-3 py-1 text-sm border rounded-md hover:bg-accent {{nextClasses}}"
+  {{nextDisabled}}
+>
+  <i data-lucide="chevron-right" class="w-4 h-4"></i>
+</button>
