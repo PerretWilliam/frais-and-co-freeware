@@ -235,13 +235,18 @@ export class ChantiersPage {
     container.innerHTML = tableHtml;
 
     // Pagination
-    const totalPages = Math.ceil(this.filteredChantiers.length / this.itemsPerPage);
+    const totalPages = Math.ceil(
+      this.filteredChantiers.length / this.itemsPerPage
+    );
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = Math.min(
       startIndex + this.itemsPerPage,
       this.filteredChantiers.length
     );
-    const paginatedChantiers = this.filteredChantiers.slice(startIndex, endIndex);
+    const paginatedChantiers = this.filteredChantiers.slice(
+      startIndex,
+      endIndex
+    );
 
     // Update pagination info
     const rangeStart = document.getElementById("range-start");
@@ -250,7 +255,8 @@ export class ChantiersPage {
 
     if (rangeStart) rangeStart.textContent = (startIndex + 1).toString();
     if (rangeEnd) rangeEnd.textContent = endIndex.toString();
-    if (totalCount) totalCount.textContent = this.filteredChantiers.length.toString();
+    if (totalCount)
+      totalCount.textContent = this.filteredChantiers.length.toString();
 
     // Render rows
     const tbody = document.getElementById("chantiers-table-body");
@@ -331,7 +337,8 @@ export class ChantiersPage {
 
     // Add first page and ellipsis if needed
     if (startPage > 1) {
-      const activeClass = this.currentPage === 1 ? "bg-primary text-primary-foreground" : "";
+      const activeClass =
+        this.currentPage === 1 ? "bg-primary text-primary-foreground" : "";
       pageButtons += `
         <button
           onclick="window.chantiersPage.goToPage(1)"
@@ -347,7 +354,8 @@ export class ChantiersPage {
 
     // Page number buttons
     for (let i = startPage; i <= endPage; i++) {
-      const activeClass = this.currentPage === i ? "bg-primary text-primary-foreground" : "";
+      const activeClass =
+        this.currentPage === i ? "bg-primary text-primary-foreground" : "";
       pageButtons += `
         <button
           onclick="window.chantiersPage.goToPage(${i})"
@@ -363,7 +371,10 @@ export class ChantiersPage {
       if (endPage < totalPages - 1) {
         pageButtons += '<span class="px-2">...</span>';
       }
-      const activeClass = this.currentPage === totalPages ? "bg-primary text-primary-foreground" : "";
+      const activeClass =
+        this.currentPage === totalPages
+          ? "bg-primary text-primary-foreground"
+          : "";
       pageButtons += `
         <button
           onclick="window.chantiersPage.goToPage(${totalPages})"
@@ -381,8 +392,8 @@ export class ChantiersPage {
     container.innerHTML = `
       <button
         onclick="window.chantiersPage.goToPage(${this.currentPage - 1})"
-        class="px-3 py-1 text-sm border rounded-md hover:bg-accent ${disablePrevious ? 'opacity-50 cursor-not-allowed' : ''}"
-        ${disablePrevious ? 'disabled' : ''}
+        class="px-3 py-1 text-sm border rounded-md hover:bg-accent ${disablePrevious ? "opacity-50 cursor-not-allowed" : ""}"
+        ${disablePrevious ? "disabled" : ""}
       >
         <i data-lucide="chevron-left" class="w-4 h-4"></i>
       </button>
@@ -391,8 +402,8 @@ export class ChantiersPage {
 
       <button
         onclick="window.chantiersPage.goToPage(${this.currentPage + 1})"
-        class="px-3 py-1 text-sm border rounded-md hover:bg-accent ${disableNext ? 'opacity-50 cursor-not-allowed' : ''}"
-        ${disableNext ? 'disabled' : ''}
+        class="px-3 py-1 text-sm border rounded-md hover:bg-accent ${disableNext ? "opacity-50 cursor-not-allowed" : ""}"
+        ${disableNext ? "disabled" : ""}
       >
         <i data-lucide="chevron-right" class="w-4 h-4"></i>
       </button>
@@ -402,8 +413,15 @@ export class ChantiersPage {
   }
 
   public goToPage(page: number): void {
-    console.log("goToPage called with:", page, "current page:", this.currentPage);
-    const totalPages = Math.ceil(this.filteredChantiers.length / this.itemsPerPage);
+    console.log(
+      "goToPage called with:",
+      page,
+      "current page:",
+      this.currentPage
+    );
+    const totalPages = Math.ceil(
+      this.filteredChantiers.length / this.itemsPerPage
+    );
     if (page < 1 || page > totalPages) return;
     this.currentPage = page;
     void this.renderTable();
