@@ -1,0 +1,69 @@
+<div class="container mx-auto p-6 space-y-6 max-w-4xl">
+  <!-- Header -->
+  <div>
+    <h1 class="text-3xl font-bold tracking-tight">Aide & Support</h1>
+    <p class="text-muted-foreground">
+      Trouvez des réponses à vos questions ou contactez-nous
+    </p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="bg-card border rounded-lg">
+    <!-- Tab List -->
+    <div class="border-b">
+      <div class="flex space-x-1 p-1">
+        <button
+          data-tab="faq"
+          class="tab-button active bg-primary text-primary-foreground flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors"
+        >
+          <i data-lucide="help-circle" class="w-4 h-4 mr-2"></i>
+          FAQ
+        </button>
+        <button
+          data-tab="mentions"
+          class="tab-button text-muted-foreground hover:bg-accent flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors"
+        >
+          <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>
+          Mentions légales
+        </button>
+        <button
+          data-tab="rgpd"
+          class="tab-button text-muted-foreground hover:bg-accent flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors"
+        >
+          <i data-lucide="shield" class="w-4 h-4 mr-2"></i>
+          RGPD
+        </button>
+        <button
+          data-tab="contact"
+          class="tab-button text-muted-foreground hover:bg-accent flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors"
+        >
+          <i data-lucide="mail" class="w-4 h-4 mr-2"></i>
+          Contact
+        </button>
+      </div>
+    </div>
+
+    <!-- Tab Contents -->
+    <div class="p-6">
+      <!-- FAQ Tab -->
+      <div id="tab-faq" class="tab-content active">
+        <div id="faq-container"></div>
+      </div>
+
+      <!-- Mentions Tab -->
+      <div id="tab-mentions" class="tab-content hidden">
+        <div id="mentions-container"></div>
+      </div>
+
+      <!-- RGPD Tab -->
+      <div id="tab-rgpd" class="tab-content hidden">
+        <div id="rgpd-container"></div>
+      </div>
+
+      <!-- Contact Tab -->
+      <div id="tab-contact" class="tab-content hidden">
+        <div id="contact-container"></div>
+      </div>
+    </div>
+  </div>
+</div>

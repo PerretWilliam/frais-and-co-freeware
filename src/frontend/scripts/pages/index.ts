@@ -8,3 +8,4 @@ export { FraisGlobauxPage } from "./frais-globaux-page";
 export { ChantiersPage } from "./chantiers-page";
 export { VehiculesPage } from "./vehicules-page";
 export { TarifsPage } from "./tarifs-page";
+export { AidePage } from "./aide-page";

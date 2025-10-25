@@ -18,6 +18,7 @@ import {
   ChantiersPage,
   VehiculesPage,
   TarifsPage,
+  AidePage,
 } from "./pages";
 
 declare const lucide: {
@@ -242,10 +243,7 @@ class App {
         path: "/aide",
         title: "Aide",
         component: async () => {
-          await this.renderPlaceholder(
-            "Aide",
-            "Centre d'aide et documentation"
-          );
+          await new AidePage().render();
         },
       },
 

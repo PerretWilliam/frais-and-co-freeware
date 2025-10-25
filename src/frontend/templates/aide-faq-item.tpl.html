@@ -1,0 +1,14 @@
+<div class="border rounded-lg overflow-hidden">
+  <button
+    class="faq-trigger w-full flex items-center justify-between px-4 py-3 bg-muted/50 hover:bg-muted text-left font-medium"
+    data-faq-id="{{id}}"
+  >
+    <span>{{question}}</span>
+    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+  </button>
+  <div
+    class="faq-content hidden px-4 py-3 text-sm text-muted-foreground bg-background"
+  >
+    {{answer}}
+  </div>
+</div>
