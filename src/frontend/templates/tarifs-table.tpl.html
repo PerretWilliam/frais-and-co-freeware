@@ -1,0 +1,39 @@
+<div class="rounded-lg border overflow-hidden">
+  <table class="w-full">
+    <thead class="bg-muted/50">
+      <tr>
+        <th class="px-4 py-3 text-left text-sm font-medium">Cylindrée (CV)</th>
+        <th class="px-4 py-3 text-right text-sm font-medium whitespace-nowrap">
+          Tarif/km (€)
+        </th>
+        {{actionsHeaderHtml}}
+      </tr>
+    </thead>
+    <tbody id="tarifs-table-body" class="divide-y"></tbody>
+  </table>
+</div>
+
+<!-- Pagination Controls -->
+<div class="mt-4 flex items-center justify-between">
+  <div class="flex items-center gap-2 text-sm text-muted-foreground">
+    <span>
+      Afficher
+      <select
+        id="items-per-page"
+        class="mx-1 px-2 py-1 border rounded-md bg-background"
+      >
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+      éléments par page
+    </span>
+    <span class="ml-4">
+      <span id="range-start">1</span> - <span id="range-end">10</span> sur
+      <span id="total-count">0</span>
+    </span>
+  </div>
+
+  <div id="pagination-buttons" class="flex items-center gap-1"></div>
+</div>

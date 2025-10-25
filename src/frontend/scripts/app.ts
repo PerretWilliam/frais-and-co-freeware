@@ -17,6 +17,7 @@ import {
   FraisGlobauxPage,
   ChantiersPage,
   VehiculesPage,
+  TarifsPage,
 } from "./pages";
 
 declare const lucide: {
@@ -209,10 +210,7 @@ class App {
         path: "/tarifs",
         title: "Grille tarifaire",
         component: async () => {
-          await this.renderPlaceholder(
-            "Grille tarifaire",
-            "Gestion des tarifs"
-          );
+          await new TarifsPage().render();
         },
       },
 
