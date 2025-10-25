@@ -85,12 +85,17 @@ export class DashboardComptablePage {
         await this.showAlert(fraisEnAttente);
       }
 
-      // Render recent validations
-      await this.renderRecentValidations(frais.slice(0, 5));
+      // Sort by date (most recent first) and render recent validations
+      const sortedFrais = [...frais].sort((a, b) => {
+        const dateA = a.date ? new Date(a.date).getTime() : 0;
+        const dateB = b.date ? new Date(b.date).getTime() : 0;
+        return dateB - dateA;
+      });
+      await this.renderRecentValidations(sortedFrais.slice(0, 5));
 
       // Create charts
-      this.createValidationChart();
-      this.createTypeChart();
+      this.createValidationChart(frais);
+      this.createTypeChart(frais);
     } catch (error) {
       console.error("Error loading comptable dashboard:", error);
     }
@@ -107,9 +112,12 @@ export class DashboardComptablePage {
     const container = document.getElementById("alert-container");
     if (!container) return;
 
-    container.innerHTML = await renderTemplate("alert-pending-frais", {
-      count: count,
-    });
+    container.innerHTML = await renderTemplate(
+      "/src/frontend/templates/alert-pending-frais.tpl.html",
+      {
+        count: count,
+      }
+    );
     lucide.createIcons();
   }
 
@@ -118,9 +126,12 @@ export class DashboardComptablePage {
     if (!container) return;
 
     if (frais.length === 0) {
-      container.innerHTML = await renderTemplate("empty-message", {
-        message: "Aucune validation récente",
-      });
+      container.innerHTML = await renderTemplate(
+        "/src/frontend/templates/empty-message.tpl.html",
+        {
+          message: "Aucune validation récente",
+        }
+      );
       return;
     }
 
@@ -134,18 +145,22 @@ export class DashboardComptablePage {
               ? "Refus"
               : "En cours";
 
-        return await renderTemplate("validation-item", {
-          dotClass: statusConfig.dotClass,
-          lieu: f.lieu,
-          montant: this.formatCurrency(f.montant),
-          statusClass: statusConfig.class,
-          statusLabel: actionLabel,
-          date: this.formatDate(f.date),
-        });
+        return await renderTemplate(
+          "/src/frontend/templates/validation-item.tpl.html",
+          {
+            dotClass: statusConfig.dotClass,
+            lieu: f.lieu,
+            montant: this.formatCurrency(f.montant),
+            statusClass: statusConfig.class,
+            statusLabel: actionLabel,
+            date: this.formatDate(f.date),
+          }
+        );
       })
     );
 
     container.innerHTML = items.join("");
+    lucide.createIcons();
   }
 
   private getStatusConfig(statut: string): {
@@ -219,7 +234,7 @@ export class DashboardComptablePage {
     }
   }
 
-  private createValidationChart(): void {
+  private createValidationChart(frais: Frais[]): void {
     const canvas = document.getElementById(
       "validation-chart"
     ) as HTMLCanvasElement;
@@ -229,13 +244,43 @@ export class DashboardComptablePage {
       this.charts.get("validation-chart")?.destroy();
     }
 
-    const validationData = [
-      { month: "Juin", valides: 45, refuses: 2 },
-      { month: "Juillet", valides: 52, refuses: 1 },
-      { month: "Août", valides: 38, refuses: 3 },
-      { month: "Sept", valides: 61, refuses: 2 },
-      { month: "Oct", valides: 28, refuses: 1 },
-    ];
+    // Grouper les frais par mois et statut
+    const monthData: Record<string, { valides: number; refuses: number }> = {};
+    const now = new Date();
+
+    // Initialiser les 5 derniers mois
+    for (let i = 4; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const monthKey = date.toLocaleDateString("fr-FR", {
+        month: "short",
+        year: "numeric",
+      });
+      monthData[monthKey] = { valides: 0, refuses: 0 };
+    }
+
+    // Compter les frais validés et refusés par mois
+    frais.forEach((f) => {
+      if (f.date) {
+        const fraisDate = new Date(f.date);
+        const monthKey = fraisDate.toLocaleDateString("fr-FR", {
+          month: "short",
+          year: "numeric",
+        });
+        if (monthKey in monthData) {
+          if (f.statut === "Paye") {
+            monthData[monthKey].valides++;
+          } else if (f.statut === "Refuse") {
+            monthData[monthKey].refuses++;
+          }
+        }
+      }
+    });
+
+    const validationData = Object.entries(monthData).map(([month, counts]) => ({
+      month,
+      valides: counts.valides,
+      refuses: counts.refuses,
+    }));
 
     const chart = new Chart(canvas, {
       type: "line",
@@ -278,7 +323,7 @@ export class DashboardComptablePage {
     this.charts.set("validation-chart", chart);
   }
 
-  private createTypeChart(): void {
+  private createTypeChart(frais: Frais[]): void {
     const canvas = document.getElementById("type-chart") as HTMLCanvasElement;
     if (!canvas) return;
 
@@ -286,10 +331,30 @@ export class DashboardComptablePage {
       this.charts.get("type-chart")?.destroy();
     }
 
+    // Calculer les montants par statut
+    const statusMontants: Record<string, number> = {
+      Payés: 0,
+      "En paiement": 0,
+      "En attente": 0,
+    };
+
+    frais.forEach((f) => {
+      const montant = parseFloat(String(f.montant || 0));
+      if (isNaN(montant)) return;
+
+      if (f.statut === "Paye") {
+        statusMontants["Payés"] += montant;
+      } else if (f.statut === "PaiementEnCours") {
+        statusMontants["En paiement"] += montant;
+      } else if (f.statut === "EnCours") {
+        statusMontants["En attente"] += montant;
+      }
+    });
+
     const typeData = [
-      { type: "Déplacement", montant: 15420 },
-      { type: "Repas", montant: 4250 },
-      { type: "Hébergement", montant: 8900 },
+      { type: "Payés", montant: statusMontants["Payés"] },
+      { type: "En paiement", montant: statusMontants["En paiement"] },
+      { type: "En attente", montant: statusMontants["En attente"] },
     ];
 
     const chart = new Chart(canvas, {
@@ -300,7 +365,11 @@ export class DashboardComptablePage {
           {
             label: "Montant (€)",
             data: typeData.map((d) => d.montant),
-            backgroundColor: "rgb(59, 130, 246)",
+            backgroundColor: [
+              "rgb(34, 197, 94)", // Vert pour Payés
+              "rgb(59, 130, 246)", // Bleu pour En paiement
+              "rgb(251, 146, 60)", // Orange pour En attente
+            ],
           },
         ],
       },

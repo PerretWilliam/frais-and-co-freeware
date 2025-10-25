@@ -30,7 +30,7 @@ export async function createUtilisateur(
         role, valide, plaque, cylindree, marque, modele, type_essence
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
       RETURNING id_utilisateur, nom_utilisateur, prenom, email, adresse_utilisateur,
-                cp_utilisateur, ville_utilisateur, role, valide, plaque,
+                cp_utilisateur, ville_utilisateur, role, valide, date_creation, plaque,
                 cylindree, marque, modele, type_essence
     `;
 
@@ -96,7 +96,7 @@ export async function loginUtilisateur(
   try {
     const query = `
       SELECT id_utilisateur, nom_utilisateur, prenom, email, mot_de_passe, salt,
-             adresse_utilisateur, cp_utilisateur, ville_utilisateur, role, valide,
+             adresse_utilisateur, cp_utilisateur, ville_utilisateur, role, valide, date_creation,
              plaque, cylindree, marque, modele, type_essence
       FROM Utilisateur
       WHERE email = $1
@@ -167,7 +167,7 @@ export async function getAllUtilisateurs(): Promise<
     const query = `
       SELECT id_utilisateur, nom_utilisateur, prenom, email,
              adresse_utilisateur, cp_utilisateur, ville_utilisateur,
-             role, valide, plaque, cylindree, marque, modele, type_essence
+             role, valide, date_creation, plaque, cylindree, marque, modele, type_essence
       FROM Utilisateur
       ORDER BY nom_utilisateur, prenom
     `;
@@ -201,7 +201,7 @@ export async function getUtilisateurById(
     const query = `
       SELECT id_utilisateur, nom_utilisateur, prenom, email,
              adresse_utilisateur, cp_utilisateur, ville_utilisateur,
-             role, valide, plaque, cylindree, marque, modele, type_essence
+             role, valide, date_creation, plaque, cylindree, marque, modele, type_essence
       FROM Utilisateur
       WHERE id_utilisateur = $1
     `;
@@ -313,7 +313,7 @@ export async function updateUtilisateur(
       WHERE id_utilisateur = $${paramIndex}
       RETURNING id_utilisateur, nom_utilisateur, prenom, email,
                 adresse_utilisateur, cp_utilisateur, ville_utilisateur,
-                role, valide, plaque, cylindree, marque, modele, type_essence
+                role, valide, date_creation, plaque, cylindree, marque, modele, type_essence
     `;
 
     const result = await client.query(query, values);
@@ -481,7 +481,7 @@ export async function validateUtilisateur(
       WHERE id_utilisateur = $1
       RETURNING id_utilisateur, nom_utilisateur, prenom, email,
                 adresse_utilisateur, cp_utilisateur, ville_utilisateur,
-                role, valide, plaque, cylindree, marque, modele, type_essence
+                role, valide, date_creation, plaque, cylindree, marque, modele, type_essence
     `;
 
     const result = await client.query(query, [id]);
@@ -521,7 +521,7 @@ export async function getPendingUtilisateurs(): Promise<
     const query = `
       SELECT id_utilisateur, nom_utilisateur, prenom, email,
              adresse_utilisateur, cp_utilisateur, ville_utilisateur,
-             role, valide, plaque, cylindree, marque, modele, type_essence
+             role, valide, date_creation, plaque, cylindree, marque, modele, type_essence
       FROM Utilisateur
       WHERE valide = false
       ORDER BY nom_utilisateur, prenom

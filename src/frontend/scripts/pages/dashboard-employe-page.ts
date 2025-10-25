@@ -80,11 +80,16 @@ export class DashboardEmployePage {
       this.updateProgress("progress-en-attente", progress);
 
       // Render recent expenses list
-      await this.renderRecentExpenses(frais.slice(0, 4));
+      const sortedFrais = [...frais].sort((a, b) => {
+        const dateA = a.date ? new Date(a.date).getTime() : 0;
+        const dateB = b.date ? new Date(b.date).getTime() : 0;
+        return dateB - dateA;
+      });
+      await this.renderRecentExpenses(sortedFrais.slice(0, 4));
 
       // Create charts
-      this.createMonthlyChart();
-      this.createTypeChart();
+      this.createMonthlyChart(frais);
+      this.createTypeChart(frais);
     } catch (error) {
       console.error("Error loading dashboard data:", error);
     }
@@ -178,15 +183,10 @@ export class DashboardEmployePage {
     );
 
     container.innerHTML = expensesHtml.join("");
+    lucide.createIcons();
   }
 
-  private escapeHtml(text: string): string {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
-  }
-
-  private createMonthlyChart(): void {
+  private createMonthlyChart(frais: Frais[]): void {
     const canvas = document.getElementById(
       "monthly-chart"
     ) as HTMLCanvasElement;
@@ -197,13 +197,43 @@ export class DashboardEmployePage {
       this.charts.get("monthly-chart")?.destroy();
     }
 
-    const monthlyData = [
-      { month: "Juin", montant: 850 },
-      { month: "Juillet", montant: 1200 },
-      { month: "Août", montant: 950 },
-      { month: "Sept", montant: 1450 },
-      { month: "Oct", montant: 886 },
-    ];
+    // Grouper les frais par mois
+    const monthMontants: Record<string, number> = {};
+    const now = new Date();
+
+    // Initialiser les 5 derniers mois
+    for (let i = 4; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const monthKey = date.toLocaleDateString("fr-FR", {
+        month: "short",
+        year: "numeric",
+      });
+      monthMontants[monthKey] = 0;
+    }
+
+    // Calculer les montants par mois
+    frais.forEach((f) => {
+      if (f.date) {
+        const fraisDate = new Date(f.date);
+        const monthKey = fraisDate.toLocaleDateString("fr-FR", {
+          month: "short",
+          year: "numeric",
+        });
+        if (monthKey in monthMontants) {
+          const montant = parseFloat(String(f.montant || 0));
+          if (!isNaN(montant)) {
+            monthMontants[monthKey] += montant;
+          }
+        }
+      }
+    });
+
+    const monthlyData = Object.entries(monthMontants).map(
+      ([month, montant]) => ({
+        month,
+        montant,
+      })
+    );
 
     const chart = new Chart(canvas, {
       type: "line",
@@ -238,7 +268,7 @@ export class DashboardEmployePage {
     this.charts.set("monthly-chart", chart);
   }
 
-  private createTypeChart(): void {
+  private createTypeChart(frais: Frais[]): void {
     const canvas = document.getElementById("type-chart") as HTMLCanvasElement;
     if (!canvas) return;
 
@@ -247,17 +277,41 @@ export class DashboardEmployePage {
       this.charts.get("type-chart")?.destroy();
     }
 
+    // Calculer les montants par statut
+    const statusMontants: Record<string, number> = {
+      Payé: 0,
+      "En paiement": 0,
+      "En attente": 0,
+    };
+
+    frais.forEach((f) => {
+      const montant = parseFloat(String(f.montant || 0));
+      if (isNaN(montant)) return;
+
+      if (f.statut === "Paye") {
+        statusMontants["Payé"] += montant;
+      } else if (f.statut === "PaiementEnCours") {
+        statusMontants["En paiement"] += montant;
+      } else if (f.statut === "EnCours") {
+        statusMontants["En attente"] += montant;
+      }
+    });
+
     const chart = new Chart(canvas, {
       type: "doughnut",
       data: {
-        labels: ["Transport", "Repas", "Hébergement"],
+        labels: ["Payé (€)", "En paiement (€)", "En attente (€)"],
         datasets: [
           {
-            data: [450, 286, 150],
+            data: [
+              statusMontants["Payé"],
+              statusMontants["En paiement"],
+              statusMontants["En attente"],
+            ],
             backgroundColor: [
-              "rgb(59, 130, 246)",
-              "rgb(16, 185, 129)",
-              "rgb(249, 115, 22)",
+              "rgb(34, 197, 94)", // Vert pour Payé
+              "rgb(59, 130, 246)", // Bleu pour En paiement
+              "rgb(251, 146, 60)", // Orange pour En attente
             ],
           },
         ],

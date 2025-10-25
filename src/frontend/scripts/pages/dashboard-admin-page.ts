@@ -16,6 +16,13 @@ declare const Chart: {
   };
 };
 
+// Déclaration globale pour accès depuis les boutons
+declare global {
+  interface Window {
+    dashboardAdminPage: DashboardAdminPage;
+  }
+}
+
 /**
  * Dashboard Admin Page
  */
@@ -31,6 +38,9 @@ export class DashboardAdminPage {
       {}
     );
     outlet.innerHTML = html;
+
+    // Rendre l'instance accessible globalement
+    window.dashboardAdminPage = this;
 
     await this.loadData();
     lucide.createIcons();
@@ -75,12 +85,19 @@ export class DashboardAdminPage {
         await this.showAlert(totalPending);
       }
 
+      // Sort users by date_creation (most recent first) and take top 5
+      const sortedUsers = [...users].sort((a, b) => {
+        const dateA = a.date_creation ? new Date(a.date_creation).getTime() : 0;
+        const dateB = b.date_creation ? new Date(b.date_creation).getTime() : 0;
+        return dateB - dateA; // Descending order
+      });
+
       // Render recent users
-      await this.renderRecentUsers(users.slice(0, 5));
+      await this.renderRecentUsers(sortedUsers.slice(0, 5));
 
       // Create charts
       this.createRoleChart(users);
-      this.createActivityChart();
+      this.createActivityChart(frais);
     } catch (error) {
       console.error("Error loading admin dashboard:", error);
     }
@@ -103,20 +120,29 @@ export class DashboardAdminPage {
     const container = document.getElementById("alert-container");
     if (!container) return;
 
-    container.innerHTML = await renderTemplate("alert-pending-users", {
-      count: count,
-    });
+    container.innerHTML = await renderTemplate(
+      "/src/frontend/templates/alert-pending-users.tpl.html",
+      {
+        count: count,
+      }
+    );
     lucide.createIcons();
   }
 
   private async renderRecentUsers(users: Utilisateur[]): Promise<void> {
     const container = document.getElementById("recent-users");
-    if (!container) return;
+    if (!container) {
+      console.error("Container 'recent-users' not found!");
+      return;
+    }
 
     if (users.length === 0) {
-      container.innerHTML = await renderTemplate("empty-message", {
-        message: "Aucun utilisateur",
-      });
+      container.innerHTML = await renderTemplate(
+        "/src/frontend/templates/empty-message.tpl.html",
+        {
+          message: "Aucun utilisateur",
+        }
+      );
       return;
     }
 
@@ -138,24 +164,109 @@ export class DashboardAdminPage {
       users.map(async (u) => {
         const roleLabel = roleLabels[u.role] || u.role;
         const roleColor = roleColors[u.role] || roleColors.employe;
-        const statusClass = u.valide
-          ? "bg-chart-validated/20 text-chart-validated"
-          : "bg-chart-pending/20 text-chart-pending";
-        const statusLabel = u.valide ? "Validé" : "En attente";
 
-        return await renderTemplate("user-list-item", {
-          initials: `${u.prenom[0]}${u.nom_utilisateur[0]}`,
-          fullname: `${u.prenom} ${u.nom_utilisateur}`,
-          email: u.email,
-          roleClass: roleColor,
-          roleLabel: roleLabel,
-          statusClass: statusClass,
-          statusLabel: statusLabel,
-        });
+        // Format date creation
+        const dateCreation = this.formatDateCreation(u.date_creation);
+
+        // Generate action buttons using templates
+        let actionButtons = "";
+        if (u.valide) {
+          actionButtons = await renderTemplate(
+            "/src/frontend/templates/user-validated-badge.tpl.html",
+            {}
+          );
+        } else {
+          actionButtons = await renderTemplate(
+            "/src/frontend/templates/user-action-buttons.tpl.html",
+            {
+              userId: u.id_utilisateur,
+            }
+          );
+        }
+
+        const renderedItem = await renderTemplate(
+          "/src/frontend/templates/user-list-item.tpl.html",
+          {
+            initials: `${u.prenom[0]}${u.nom_utilisateur[0]}`,
+            fullname: `${u.prenom} ${u.nom_utilisateur}`,
+            email: u.email,
+            roleClass: roleColor,
+            roleLabel: roleLabel,
+            dateCreation: dateCreation,
+            actionButtonsHtml: actionButtons,
+          }
+        );
+
+        return renderedItem;
       })
     );
 
-    container.innerHTML = items.join("");
+    const finalHTML = items.join("");
+
+    container.innerHTML = finalHTML;
+
+    lucide.createIcons();
+  }
+
+  private formatDateCreation(dateCreation: string | Date | undefined): string {
+    if (!dateCreation) return "Date inconnue";
+
+    const date = new Date(dateCreation);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 1) {
+      return "aujourd'hui";
+    } else if (diffDays === 1) {
+      return "il y a 1 jour";
+    } else if (diffDays < 7) {
+      return `il y a ${diffDays} jours`;
+    } else if (diffDays < 14) {
+      return "il y a 1 semaine";
+    } else if (diffDays < 30) {
+      const weeks = Math.floor(diffDays / 7);
+      return `il y a ${weeks} semaines`;
+    } else if (diffDays < 60) {
+      return "il y a 1 mois";
+    } else {
+      const months = Math.floor(diffDays / 30);
+      return `il y a ${months} mois`;
+    }
+  }
+
+  public async validateUser(userId: number): Promise<void> {
+    try {
+      const response = await UtilisateurService.validate(userId);
+      if (response.success) {
+        await this.loadData();
+      } else {
+        console.error("Failed to validate user:", response.error);
+        alert("Erreur lors de la validation de l'utilisateur");
+      }
+    } catch (error) {
+      console.error("Error validating user:", error);
+      alert("Erreur lors de la validation de l'utilisateur");
+    }
+  }
+
+  public async rejectUser(userId: number): Promise<void> {
+    if (!confirm("Êtes-vous sûr de vouloir refuser cet utilisateur ?")) {
+      return;
+    }
+
+    try {
+      const response = await UtilisateurService.delete(userId);
+      if (response.success) {
+        await this.loadData();
+      } else {
+        console.error("Failed to reject user:", response.error);
+        alert("Erreur lors du refus de l'utilisateur");
+      }
+    } catch (error) {
+      console.error("Error rejecting user:", error);
+      alert("Erreur lors du refus de l'utilisateur");
+    }
   }
 
   private escapeHtml(text: string): string {
@@ -207,7 +318,7 @@ export class DashboardAdminPage {
     this.charts.set("role-chart", chart);
   }
 
-  private createActivityChart(): void {
+  private createActivityChart(frais: Frais[]): void {
     const canvas = document.getElementById(
       "activity-chart"
     ) as HTMLCanvasElement;
@@ -217,13 +328,38 @@ export class DashboardAdminPage {
       this.charts.get("activity-chart")?.destroy();
     }
 
-    const activityData = [
-      { month: "Juin", count: 89 },
-      { month: "Juillet", count: 112 },
-      { month: "Août", count: 95 },
-      { month: "Sept", count: 134 },
-      { month: "Oct", count: 67 },
-    ];
+    // Grouper les frais par mois
+    const monthCounts: Record<string, number> = {};
+    const now = new Date();
+
+    // Initialiser les 5 derniers mois
+    for (let i = 4; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const monthKey = date.toLocaleDateString("fr-FR", {
+        month: "short",
+        year: "numeric",
+      });
+      monthCounts[monthKey] = 0;
+    }
+
+    // Compter les frais par mois
+    frais.forEach((f) => {
+      if (f.date) {
+        const fraisDate = new Date(f.date);
+        const monthKey = fraisDate.toLocaleDateString("fr-FR", {
+          month: "short",
+          year: "numeric",
+        });
+        if (monthKey in monthCounts) {
+          monthCounts[monthKey]++;
+        }
+      }
+    });
+
+    const activityData = Object.entries(monthCounts).map(([month, count]) => ({
+      month,
+      count,
+    }));
 
     const chart = new Chart(canvas, {
       type: "bar",

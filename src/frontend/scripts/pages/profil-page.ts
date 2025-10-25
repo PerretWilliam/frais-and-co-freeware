@@ -172,37 +172,57 @@ export class ProfilPage {
     if (!this.user?.id_utilisateur) return;
 
     try {
-      const statsResponse = await FraisService.getByUser(
-        this.user.id_utilisateur
-      );
+      // Masquer les stats de frais pour les admins et comptables
+      const statsCardsContainer = document.getElementById("stats-cards");
+      if (
+        statsCardsContainer &&
+        (this.user.role === Role.ADMIN || this.user.role === Role.COMPTABLE)
+      ) {
+        statsCardsContainer.style.display = "none";
+      } else if (statsCardsContainer) {
+        statsCardsContainer.style.display = "grid";
 
-      if (statsResponse.success && statsResponse.data) {
-        const stats = statsResponse.data as unknown as {
-          totalFrais: number;
-          totalAmount: number;
-        };
+        // Charger les vrais frais depuis la BDD
+        const fraisResponse = await FraisService.getByUser(
+          this.user.id_utilisateur
+        );
 
-        const totalFraisEl = document.getElementById("stat-total-frais");
-        const totalAmountEl = document.getElementById("stat-total-amount");
+        if (fraisResponse.success && fraisResponse.data) {
+          const frais = fraisResponse.data;
 
-        if (totalFraisEl) {
-          const totalFrais = stats.totalFrais ?? 0;
-          totalFraisEl.textContent = totalFrais.toString();
-        }
-        if (totalAmountEl) {
-          const totalAmount = stats.totalAmount ?? 0;
-          totalAmountEl.textContent = `${totalAmount.toFixed(2)} €`;
+          // Calculer le nombre total de frais
+          const totalFrais = Array.isArray(frais) ? frais.length : 0;
+
+          // Calculer le montant total
+          const totalAmount = Array.isArray(frais)
+            ? frais.reduce((sum, f) => {
+                const montant = parseFloat(String(f.montant || 0));
+                return sum + (isNaN(montant) ? 0 : montant);
+              }, 0)
+            : 0;
+
+          const totalFraisEl = document.getElementById("stat-total-frais");
+          const totalAmountEl = document.getElementById("stat-total-amount");
+
+          if (totalFraisEl) {
+            totalFraisEl.textContent = totalFrais.toString();
+          }
+          if (totalAmountEl) {
+            totalAmountEl.textContent = `${totalAmount.toFixed(2)} €`;
+          }
         }
       }
 
-      // Format member since date
+      // Format member since date avec date_creation
       const memberSinceEl = document.getElementById("stat-member-since");
-      if (memberSinceEl) {
-        const date = new Date();
+      if (memberSinceEl && this.user.date_creation) {
+        const date = new Date(this.user.date_creation);
         memberSinceEl.textContent = date.toLocaleDateString("fr-FR", {
           month: "short",
           year: "numeric",
         });
+      } else if (memberSinceEl) {
+        memberSinceEl.textContent = "-";
       }
     } catch (error) {
       console.error("Error loading stats:", error);

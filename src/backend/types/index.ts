@@ -43,6 +43,7 @@ export interface Utilisateur {
   ville_utilisateur: string;
   role: Role;
   valide: boolean;
+  date_creation?: Date;
   plaque: string;
   cylindree: number;
   marque: string;

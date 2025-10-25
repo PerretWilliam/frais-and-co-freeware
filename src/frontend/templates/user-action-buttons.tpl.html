@@ -1,0 +1,14 @@
+<button
+  onclick="window.dashboardAdminPage.validateUser('{{userId}}')"
+  class="inline-flex items-center px-3 py-1 text-xs font-medium rounded-md bg-chart-validated text-white hover:bg-chart-validated/90 transition-colors"
+  title="Valider l'utilisateur"
+>
+  <i data-lucide="check" class="w-3 h-3 mr-1"></i> Valider
+</button>
+<button
+  onclick="window.dashboardAdminPage.rejectUser('{{userId}}')"
+  class="inline-flex items-center px-3 py-1 text-xs font-medium rounded-md bg-chart-refused text-white hover:bg-chart-refused/90 transition-colors"
+  title="Refuser l'utilisateur"
+>
+  <i data-lucide="x" class="w-3 h-3 mr-1"></i> Refuser
+</button>

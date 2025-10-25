@@ -44,6 +44,7 @@ CREATE TABLE Utilisateur (
     ville_utilisateur   VARCHAR(100)      NOT NULL,
     role                role_enum         NOT NULL,
     valide              BOOLEAN           NOT NULL DEFAULT FALSE,
+    date_creation       TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP,
     plaque              VARCHAR(15)       NOT NULL UNIQUE,
     cylindree           INT               NOT NULL,
     marque              VARCHAR(50)       NOT NULL,
