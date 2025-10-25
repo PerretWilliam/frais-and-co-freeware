@@ -16,6 +16,7 @@ import {
   MesFraisPage,
   FraisGlobauxPage,
   ChantiersPage,
+  VehiculesPage,
 } from "./pages";
 
 declare const lucide: {
@@ -186,10 +187,7 @@ class App {
         path: "/vehicules",
         title: user.role === Role.EMPLOYE ? "Mon véhicule" : "Véhicules",
         component: async () => {
-          await this.renderPlaceholder(
-            user.role === Role.EMPLOYE ? "Mon véhicule" : "Véhicules",
-            "Gestion des véhicules"
-          );
+          await new VehiculesPage().render();
         },
       },
 

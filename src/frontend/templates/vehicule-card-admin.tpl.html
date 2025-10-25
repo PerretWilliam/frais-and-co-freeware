@@ -1,0 +1,34 @@
+<div class="bg-card border rounded-lg p-6">
+  <div class="space-y-4">
+    <div class="flex items-center gap-3">
+      <div
+        class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center"
+      >
+        <i data-lucide="car" class="h-6 w-6 text-primary"></i>
+      </div>
+      <div>
+        <p class="font-medium">{{marque}} {{modele}}</p>
+        <p class="text-sm text-muted-foreground">{{plaque}}</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2 text-sm">
+      <div>
+        <p class="text-muted-foreground">Propriétaire</p>
+        <p class="font-medium">{{prenom}} {{nom_utilisateur}}</p>
+      </div>
+      <div>
+        <p class="text-muted-foreground">Type</p>
+        <p class="font-medium">{{type_essence}}</p>
+      </div>
+      <div>
+        <p class="text-muted-foreground">Cylindrée</p>
+        <p class="font-medium">{{cylindree}} CV</p>
+      </div>
+      <div class="col-span-2 pt-2 border-t">
+        <p class="text-muted-foreground">Tarif/km</p>
+        <p class="text-lg font-medium text-primary">{{tarifKm}} €</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,3 +6,4 @@ export { ParametresPage } from "./parametres-page";
 export { MesFraisPage } from "./mes-frais-page";
 export { FraisGlobauxPage } from "./frais-globaux-page";
 export { ChantiersPage } from "./chantiers-page";
+export { VehiculesPage } from "./vehicules-page";
