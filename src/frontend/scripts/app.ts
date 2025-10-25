@@ -15,6 +15,7 @@ import {
   ParametresPage,
   MesFraisPage,
   FraisGlobauxPage,
+  ChantiersPage,
 } from "./pages";
 
 declare const lucide: {
@@ -176,7 +177,7 @@ class App {
         path: "/chantiers",
         title: "Chantiers",
         component: async () => {
-          await this.renderPlaceholder("Chantiers", "Gestion des chantiers");
+          await new ChantiersPage().render();
         },
       },
 
