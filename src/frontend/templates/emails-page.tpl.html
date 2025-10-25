@@ -1,0 +1,63 @@
+<div class="container mx-auto p-6 max-w-3xl">
+  <!-- Header -->
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold tracking-tight">Envoyer un email</h1>
+    <p class="text-muted-foreground">Envoyez des emails aux employés</p>
+  </div>
+
+  <!-- Send Email Form -->
+  <div class="bg-card border rounded-lg">
+    <div class="p-6 border-b">
+      <h2 class="text-lg font-semibold flex items-center gap-2">
+        <i data-lucide="send" class="h-5 w-5"></i>
+        Nouveau message
+      </h2>
+    </div>
+    <div class="p-6">
+      <form id="email-form" class="space-y-4">
+        <div class="space-y-2">
+          <label for="destinataire" class="text-sm font-medium"
+            >Destinataire *</label
+          >
+          <input
+            type="text"
+            id="destinataire"
+            name="destinataire"
+            placeholder="email@exemple.fr ou 'Tous les employés'"
+            required
+            class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+        <div class="space-y-2">
+          <label for="sujet" class="text-sm font-medium">Sujet *</label>
+          <input
+            type="text"
+            id="sujet"
+            name="sujet"
+            placeholder="Objet de l'email"
+            required
+            class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+        <div class="space-y-2">
+          <label for="message" class="text-sm font-medium">Message *</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Contenu de l'email..."
+            rows="8"
+            required
+            class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="w-full inline-flex items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium"
+        >
+          <i data-lucide="send" class="mr-2 h-4 w-4"></i>
+          Envoyer l'email
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

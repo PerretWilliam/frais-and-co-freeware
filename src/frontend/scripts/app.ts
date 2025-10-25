@@ -21,6 +21,7 @@ import {
   AidePage,
   NouveauFraisPage,
   UtilisateursPage,
+  EmailsPage,
 } from "./pages";
 
 declare const lucide: {
@@ -217,7 +218,7 @@ class App {
         title: "Emails",
         roles: [Role.COMPTABLE, Role.ADMIN],
         component: async () => {
-          await this.renderPlaceholder("Emails", "Gestion des emails");
+          await new EmailsPage().render();
         },
       },
 

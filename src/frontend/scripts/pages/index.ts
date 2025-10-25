@@ -11,3 +11,4 @@ export { TarifsPage } from "./tarifs-page";
 export { AidePage } from "./aide-page";
 export { NouveauFraisPage } from "./nouveau-frais-page";
 export { UtilisateursPage } from "./utilisateurs-page";
+export { EmailsPage } from "./emails-page";
