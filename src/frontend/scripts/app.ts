@@ -20,6 +20,7 @@ import {
   TarifsPage,
   AidePage,
   NouveauFraisPage,
+  UtilisateursPage,
 } from "./pages";
 
 declare const lucide: {
@@ -197,10 +198,7 @@ class App {
         title: "Utilisateurs",
         roles: [Role.ADMIN],
         component: async () => {
-          await this.renderPlaceholder(
-            "Utilisateurs",
-            "Gestion des utilisateurs"
-          );
+          await new UtilisateursPage().render();
         },
       },
 

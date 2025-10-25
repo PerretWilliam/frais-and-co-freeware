@@ -1,0 +1,94 @@
+<div class="container mx-auto p-6 space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">
+        Gestion des utilisateurs
+      </h1>
+      <p class="text-muted-foreground">
+        Créez et gérez les comptes utilisateurs
+      </p>
+    </div>
+    <button
+      id="btn-create-user"
+      class="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium"
+    >
+      <i data-lucide="plus-circle" class="h-4 w-4 mr-2"></i>
+      Créer un utilisateur
+    </button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div id="stats-cards" class="grid gap-4 md:grid-cols-4"></div>
+
+  <!-- Pending Users Alert -->
+  <div id="pending-users-section"></div>
+
+  <!-- Filters -->
+  <div class="bg-card border rounded-lg">
+    <div class="p-6 border-b">
+      <h2 class="text-lg font-semibold">Filtres</h2>
+    </div>
+    <div class="p-6">
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="relative md:col-span-2">
+          <i
+            data-lucide="search"
+            class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"
+          ></i>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Rechercher par nom, prénom ou email..."
+            class="w-full pl-9 px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <select
+          id="role-filter"
+          class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          <option value="all">Tous les rôles</option>
+          <option value="employe">Employé</option>
+          <option value="comptable">Comptable</option>
+          <option value="admin">Administrateur</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="bg-card border rounded-lg">
+    <div class="p-6 border-b flex items-center justify-between">
+      <h2 class="text-lg font-semibold">
+        Liste des utilisateurs (<span id="user-count">0</span>)
+      </h2>
+      <div class="flex items-center gap-2">
+        <label for="items-per-page" class="text-sm text-muted-foreground"
+          >Afficher</label
+        >
+        <select
+          id="items-per-page"
+          class="px-3 py-1.5 bg-background border rounded-md text-sm"
+        >
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <span class="text-sm text-muted-foreground">par page</span>
+      </div>
+    </div>
+    <div class="p-6">
+      <div id="users-table-container"></div>
+      <!-- Pagination -->
+      <div
+        id="pagination-container"
+        class="flex items-center justify-between mt-6"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Modals will be rendered here -->
+  <div id="modal-container"></div>
+</div>

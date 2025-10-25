@@ -1,0 +1,35 @@
+<div
+  class="flex items-center justify-between p-4 bg-card rounded-lg border"
+  data-user-id="{{id_utilisateur}}"
+>
+  <div class="flex items-center gap-3">
+    <div
+      class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center font-semibold text-primary"
+    >
+      {{initials}}
+    </div>
+    <div>
+      <p class="font-medium">{{prenom}} {{nom_utilisateur}}</p>
+      <p class="text-sm text-muted-foreground">{{email}}</p>
+    </div>
+    <span class="{{roleClass}} px-2.5 py-0.5 rounded-full text-xs font-medium">
+      {{roleLabel}}
+    </span>
+  </div>
+  <div class="flex gap-2">
+    <button
+      class="btn-approve inline-flex items-center px-3 py-1.5 bg-success text-white rounded-md hover:bg-success/90 text-sm font-medium"
+      data-user-id="{{id_utilisateur}}"
+    >
+      <i data-lucide="check-circle" class="h-4 w-4 mr-1"></i>
+      Approuver
+    </button>
+    <button
+      class="btn-reject inline-flex items-center px-3 py-1.5 bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90 text-sm font-medium"
+      data-user-id="{{id_utilisateur}}"
+    >
+      <i data-lucide="x" class="h-4 w-4 mr-1"></i>
+      Refuser
+    </button>
+  </div>
+</div>
