@@ -19,6 +19,7 @@ import {
   VehiculesPage,
   TarifsPage,
   AidePage,
+  NouveauFraisPage,
 } from "./pages";
 
 declare const lucide: {
@@ -158,10 +159,7 @@ class App {
         title: "Nouveau frais",
         roles: [Role.EMPLOYE],
         component: async () => {
-          await this.renderPlaceholder(
-            "Nouveau frais",
-            "Créer un nouveau frais"
-          );
+          await new NouveauFraisPage().render();
         },
       },
 

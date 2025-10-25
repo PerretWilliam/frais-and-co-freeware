@@ -1,0 +1,95 @@
+<div class="grid gap-4 md:grid-cols-2">
+  <div class="space-y-2">
+    <label for="date-debut" class="text-sm font-medium">Date de début *</label>
+    <input
+      type="date"
+      id="date-debut"
+      name="date_debut"
+      required
+      class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+    />
+  </div>
+
+  <div class="space-y-2">
+    <label for="date-fin" class="text-sm font-medium">Date de fin *</label>
+    <input
+      type="date"
+      id="date-fin"
+      name="date_fin"
+      required
+      class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+    />
+  </div>
+
+  <div class="space-y-2">
+    <label for="nuits" class="text-sm font-medium">Nombre de nuits *</label>
+    <input
+      type="number"
+      id="nuits"
+      name="nuits"
+      placeholder="0"
+      min="1"
+      required
+      class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+    />
+  </div>
+
+  <div class="space-y-2">
+    <label for="montant-hebergement" class="text-sm font-medium"
+      >Montant total (€) *</label
+    >
+    <input
+      type="number"
+      id="montant-hebergement"
+      name="montant"
+      step="0.01"
+      placeholder="0.00"
+      required
+      class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+    />
+  </div>
+
+  <div class="space-y-2 md:col-span-2">
+    <label for="chantier-hebergement" class="text-sm font-medium"
+      >Chantier associé *</label
+    >
+    <select
+      id="chantier-hebergement"
+      name="chantier_id"
+      required
+      class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+    >
+      <option value="">Sélectionner un chantier</option>
+      {{chantiersOptionsHtml}}
+    </select>
+  </div>
+
+  <div class="space-y-2 md:col-span-2">
+    <label class="text-sm font-medium">Justificatif *</label>
+    <div
+      id="dropzone-hebergement"
+      class="border-2 border-dashed rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer"
+    >
+      <i
+        data-lucide="upload"
+        class="h-8 w-8 mx-auto mb-2 text-muted-foreground"
+      ></i>
+      <p class="text-sm">Glissez-déposez votre facture ici</p>
+      <p class="text-xs text-muted-foreground mt-1">
+        ou cliquez pour parcourir
+      </p>
+      <input
+        type="file"
+        id="justificatif-hebergement"
+        name="justificatif"
+        accept="image/*"
+        required
+        class="hidden"
+      />
+    </div>
+    <p
+      id="file-name-hebergement"
+      class="text-xs text-muted-foreground mt-2"
+    ></p>
+  </div>
+</div>

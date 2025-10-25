@@ -1,0 +1,136 @@
+<div class="container mx-auto p-6 space-y-6 max-w-4xl">
+  <!-- Header -->
+  <div>
+    <h1 class="text-3xl font-bold tracking-tight">Nouveau frais</h1>
+    <p class="text-muted-foreground">
+      Déclarez vos frais de déplacement, repas ou hébergement
+    </p>
+  </div>
+
+  <!-- Form Card -->
+  <div class="bg-card border rounded-lg">
+    <div class="p-6 border-b">
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <h2 class="text-lg font-semibold">Saisie du frais</h2>
+          <p class="text-sm text-muted-foreground">
+            Remplissez tous les champs obligatoires
+          </p>
+        </div>
+        <div class="text-right">
+          <p class="text-sm text-muted-foreground">Complétion</p>
+          <p class="font-medium" id="completion-percent">0%</p>
+        </div>
+      </div>
+      <!-- Progress Bar -->
+      <div class="w-full bg-muted rounded-full h-2">
+        <div
+          id="progress-bar"
+          class="bg-primary h-2 rounded-full transition-all"
+          style="width: 0%"
+        ></div>
+      </div>
+    </div>
+
+    <div class="p-6">
+      <form id="frais-form" class="space-y-6">
+        <!-- Tabs -->
+        <div>
+          <div class="flex space-x-1 border-b">
+            <button
+              type="button"
+              data-tab="DEPLACEMENT"
+              class="tab-trigger active px-4 py-2 text-sm font-medium border-b-2 border-primary transition-colors"
+            >
+              Déplacement
+            </button>
+            <button
+              type="button"
+              data-tab="REPAS"
+              class="tab-trigger px-4 py-2 text-sm font-medium border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Repas
+            </button>
+            <button
+              type="button"
+              data-tab="HEBERGEMENT"
+              class="tab-trigger px-4 py-2 text-sm font-medium border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Hébergement
+            </button>
+          </div>
+
+          <!-- Tab Contents -->
+          <div class="mt-6">
+            <!-- Déplacement Tab -->
+            <div
+              id="tab-deplacement"
+              class="tab-content active"
+              data-type="DEPLACEMENT"
+            ></div>
+
+            <!-- Repas Tab -->
+            <div
+              id="tab-repas"
+              class="tab-content hidden"
+              data-type="REPAS"
+            ></div>
+
+            <!-- Hébergement Tab -->
+            <div
+              id="tab-hebergement"
+              class="tab-content hidden"
+              data-type="HEBERGEMENT"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Common Description Field -->
+        <div class="space-y-2">
+          <label for="description" class="text-sm font-medium"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            name="description"
+            rows="3"
+            placeholder="Décrivez brièvement le motif de ce frais..."
+            class="w-full px-3 py-2 bg-background border rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+          ></textarea>
+        </div>
+
+        <!-- Montant Total Display -->
+        <div id="montant-display" class="hidden bg-muted border rounded-lg p-6">
+          <div class="flex items-center justify-between">
+            <span class="font-medium">Montant total calculé</span>
+            <span class="text-2xl font-bold" id="montant-value">0.00 €</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4">
+          <button
+            type="button"
+            id="btn-cancel"
+            class="flex-1 px-4 py-2 bg-background border rounded-md hover:bg-accent font-medium"
+          >
+            Annuler
+          </button>
+          <button
+            type="submit"
+            class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium"
+          >
+            Enregistrer le frais
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Recent History -->
+  <div class="bg-card border rounded-lg p-6">
+    <h2 class="text-lg font-semibold mb-2">Historique rapide</h2>
+    <p class="text-sm text-muted-foreground mb-4">Vos 3 derniers frais créés</p>
+    <div id="recent-history" class="space-y-2 text-sm"></div>
+  </div>
+</div>
